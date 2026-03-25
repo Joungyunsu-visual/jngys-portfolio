@@ -57,11 +57,19 @@ document.addEventListener('DOMContentLoaded', () => {
         paneLeft.addEventListener('mouseenter', () => {
             splitSection.classList.remove('expand-right');
             splitSection.classList.add('expand-left');
+            const scrollWork = document.getElementById('scroll-work');
+            const scrollProject = document.getElementById('scroll-project');
+            if (scrollWork) scrollWork.scrollTop = 0;
+            if (scrollProject) scrollProject.scrollTop = 0;
         });
         
         paneRight.addEventListener('mouseenter', () => {
             splitSection.classList.remove('expand-left');
             splitSection.classList.add('expand-right');
+            const scrollWork = document.getElementById('scroll-work');
+            const scrollProject = document.getElementById('scroll-project');
+            if (scrollWork) scrollWork.scrollTop = 0;
+            if (scrollProject) scrollProject.scrollTop = 0;
         });
     }
 
@@ -354,6 +362,7 @@ document.addEventListener('DOMContentLoaded', () => {
             mobileTabs.forEach(t => t.classList.remove('active'));
             tab.classList.add('active');
             setMobilePane(tab.getAttribute('data-target'));
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     });
 
