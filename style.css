@@ -1,0 +1,716 @@
+/* =============================================
+   AMBIENT AURA / GLASSMORPHISM — JNGYS
+   ============================================= */
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Light Mode Variables */
+    --text-color: #1a1a1a;
+    --text-muted: #666;
+    --text-strong: #333333;
+    /* 로고나 메뉴바 포인트 텍스트용 */
+
+    --glass-bg: rgba(255, 255, 255, 0.45);
+    --glass-border: rgba(255, 255, 255, 0.6);
+    --glass-shadow: 0 12px 40px rgba(0, 0, 0, 0.04);
+    --glass-hover-bg: rgba(255, 255, 255, 0.7);
+
+    /* Veeeery pale blue aurora colors */
+    --orb-1: #e9eef5;
+    /* indigo-50 */
+    --orb-2: #eceef0;
+    /* blue-50 */
+    --orb-3: #e8ebf0;
+    /* sky-50 */
+
+    --bg-base: #e6e8eb;
+    /* 사진 톤과 매칭되는 차분한 쿨 그레이 계열 */
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --padding: clamp(24px, 4vw, 60px);
+}
+
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    font-family: var(--font);
+    color: var(--text-color);
+    background: var(--bg-base);
+    line-height: 1.6;
+    transition: background 0.6s ease, color 0.6s ease;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+}
+
+
+/* =============================================
+   NAVIGATION
+   ============================================= */
+#nav {
+    position: fixed;
+    top: 24px;
+    left: var(--padding);
+    right: var(--padding);
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+}
+
+.nav-logo {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    color: var(--text-color);
+}
+
+.nav-links {
+    display: flex;
+    gap: 36px;
+    align-items: center;
+}
+
+.nav-link {
+    font-size: 0.85rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: var(--text-color);
+    opacity: 0.7;
+    transition: opacity 0.3s;
+}
+
+.nav-link:hover {
+    opacity: 1;
+}
+
+.lang-toggle {
+    background: none;
+    border: 1px solid var(--text-color);
+    border-radius: 4px;
+    padding: 0 8px;
+    height: 32px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background 0.3s, color 0.3s, border-color 0.3s;
+    opacity: 0.5;
+    font-weight: 500;
+}
+
+.lang-toggle:hover {
+    background: var(--text-color);
+    color: var(--bg-base);
+    opacity: 1;
+}
+
+/* =============================================
+   SECTIONS — SHARED
+   ============================================= */
+.section-title {
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+    padding: 0 var(--padding);
+    color: var(--text-muted);
+}
+
+/* =============================================
+   SPLIT LAYOUT
+   ============================================= */
+.split-section {
+    height: 100vh;
+    padding-top: 80px; /* clear the top nav */
+    box-sizing: border-box;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    background: var(--bg-base);
+}
+
+.split-pane {
+    position: relative;
+    display: flex; /* stack header & scroll */
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    transition: width 1.8s cubic-bezier(0.19, 1, 0.22, 1);
+    will-change: width;
+    flex-shrink: 0;
+}
+
+.pane-left {
+    width: 66.666%;
+    border-right: 1px solid rgba(0,0,0,0.08);
+}
+
+.pane-right {
+    width: 33.333%;
+}
+
+/* JS Controlled Expand States */
+.split-section.expand-right .pane-left {
+    width: 33.333%;
+}
+
+.split-section.expand-right .pane-right {
+    width: 66.666%;
+}
+
+.split-section.expand-left .pane-left {
+    width: 66.666%;
+}
+
+.split-section.expand-left .pane-right {
+    width: 33.333%;
+}
+
+.pane-header {
+    flex-shrink: 0; /* do not shrink */
+    z-index: 10;
+    padding: 20px var(--padding) 30px;
+    background: transparent;
+}
+
+.pane-header h2 {
+    font-size: 2.5rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-color);
+    opacity: 0.6;
+    margin: 0;
+}
+
+.pane-scroll {
+    flex-grow: 1; /* take up remaining height */
+    overflow-y: auto;
+    overflow-x: hidden;
+    /* Extra padding to prevent bottom cut-off */
+    padding-bottom: 60px;
+    /* Hide scrollbar for clean look */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.pane-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.works-grid-inner {
+    display: grid;
+    gap: 32px 24px;
+    padding: 0 var(--padding);
+    align-items: start;
+}
+
+.work-card {
+    display: block;
+    width: 100%;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    will-change: transform;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Default JS expanded state assumes left is expanded initially */
+.pane-left .works-grid-inner {
+    grid-template-columns: 1fr 1fr;
+}
+
+.pane-right .works-grid-inner {
+    grid-template-columns: 1fr;
+}
+
+/* When Javascript adds .expand-right to .split-section */
+.split-section.expand-right .pane-left .works-grid-inner {
+    grid-template-columns: 1fr;
+}
+.split-section.expand-right .pane-right .works-grid-inner {
+    grid-template-columns: 1fr 1fr;
+}
+
+/* Explicit left expansion */
+.split-section.expand-left .pane-left .works-grid-inner {
+    grid-template-columns: 1fr 1fr;
+}
+.split-section.expand-left .pane-right .works-grid-inner {
+    grid-template-columns: 1fr;
+}
+
+.work-card:hover {
+    transform: translateY(-4px);
+}
+
+.work-card .work-image-placeholder {
+    width: 100%;
+    display: block;
+    margin-bottom: 12px;
+    overflow: hidden;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    transition: box-shadow 0.4s ease;
+}
+
+.work-card .work-image-placeholder img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+}
+
+.work-card:hover .work-image-placeholder {
+    box-shadow: var(--glass-shadow);
+}
+
+.work-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.work-title {
+    font-size: 0.9rem;
+    font-weight: 400;
+    line-height: 1.4;
+    color: var(--text-color);
+}
+
+.work-year {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--text-muted);
+    flex-shrink: 0;
+    margin-left: 16px;
+}
+
+/* =============================================
+   ABOUT
+   ============================================= */
+#about {
+    padding: 80px 0;
+}
+
+.about-content {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr 1fr;
+    gap: 32px;
+    padding: 0 var(--padding);
+    align-items: start;
+}
+
+.about-image img {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    border-radius: 4px;
+    box-shadow: var(--glass-shadow);
+}
+
+.about-text p {
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+}
+
+.about-text p:last-child {
+    margin-bottom: 0;
+}
+
+.about-details {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+}
+
+.about-block {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.about-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-color);
+}
+
+.about-list li {
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: var(--text-muted);
+    padding: 2px 0;
+}
+
+.client-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 8px;
+}
+
+.client-grid span {
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: var(--text-muted);
+}
+
+/* =============================================
+   CONTACT
+   ============================================= */
+#contact {
+    padding: 80px 0;
+}
+
+.contact-content {
+    margin: 0 var(--padding);
+    display: flex;
+    gap: 48px;
+}
+
+.contact-link {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: var(--text-muted);
+    transition: color 0.3s;
+}
+
+.contact-link:hover {
+    color: var(--text-color);
+}
+
+/* =============================================
+   FOOTER
+   ============================================= */
+#footer, .pane-footer {
+    padding: 40px var(--padding);
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--text-muted);
+}
+
+/* =============================================
+   WORK MODAL
+   ============================================= */
+.work-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    background-color: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.work-modal.show {
+    display: block;
+    opacity: 1;
+}
+
+.work-modal-content {
+    background-color: var(--bg-base);
+    margin: 5% auto;
+    padding: clamp(24px, 4vw, 40px);
+    border: 1px solid var(--glass-border);
+    width: 90%;
+    max-width: 900px;
+    border-radius: 8px;
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.1);
+    position: relative;
+    transform: translateY(20px);
+    transition: transform 0.4s ease;
+}
+
+.work-modal.show .work-modal-content {
+    transform: translateY(0);
+}
+
+.close-modal {
+    color: var(--text-muted);
+    position: absolute;
+    top: 16px;
+    right: 24px;
+    font-size: 32px;
+    font-weight: 300;
+    cursor: pointer;
+    transition: color 0.3s;
+    line-height: 1;
+}
+
+.close-modal:hover {
+    color: var(--text-color);
+}
+
+.modal-main-img {
+    width: 100%;
+    max-height: 60vh;
+    object-fit: contain;
+    background: var(--glass-bg);
+    border-radius: 0;
+    margin-bottom: 24px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.modal-main-img:hover {
+    transform: scale(1.02);
+}
+
+.modal-title {
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-bottom: 8px;
+    color: var(--text-color);
+}
+
+.modal-year {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+}
+
+.modal-desc {
+    font-size: 0.95rem;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--text-color);
+    margin-bottom: 24px;
+}
+
+.modal-credits {
+    margin-bottom: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.credit-item {
+    font-size: 0.85rem;
+    font-weight: 300;
+}
+
+.credit-role {
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-right: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.75rem;
+}
+
+.modal-extra-images {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+}
+
+.modal-extra-img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 0;
+    background: var(--glass-bg);
+}
+
+.modal-masonry {
+    column-count: 2;
+    column-gap: 16px;
+    margin-top: 24px;
+}
+
+.masonry-item {
+    width: 100%;
+    margin-bottom: 16px;
+    display: block;
+    break-inside: avoid-column;
+    border-radius: 0;
+    background: var(--glass-bg);
+    height: auto;
+    object-fit: contain;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.masonry-item:hover {
+    transform: scale(1.02);
+}
+
+/* =============================================
+   LIGHTBOX 
+   ============================================= */
+.lightbox {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    /* Dark background to focus on image */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    align-items: center;
+    justify-content: center;
+}
+
+.lightbox.show {
+    display: flex;
+    opacity: 1;
+}
+
+.lightbox-img {
+    max-width: 100vw;
+    max-height: 100vh;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transform: scale(0.9);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.lightbox.show .lightbox-img {
+    transform: scale(1);
+}
+
+.close-lightbox {
+    position: absolute;
+    top: 24px;
+    right: 32px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 40px;
+    font-weight: 300;
+    cursor: pointer;
+    transition: color 0.3s;
+    line-height: 1;
+    z-index: 2001;
+}
+
+.close-lightbox:hover {
+    color: white;
+}
+
+/* =============================================
+   RESPONSIVE
+   ============================================= */
+@media (max-width: 1024px) {
+    .works-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .about-content {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    #nav {
+        padding: 12px 0;
+        top: 16px;
+    }
+
+    .nav-links {
+        gap: 20px;
+    }
+
+    .nav-link {
+        font-size: 0.75rem;
+    }
+
+    .works-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .about-content {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-content {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .client-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-masonry {
+        column-count: 1;
+    }
+}
+
+/* =============================================
+   MODAL IMAGE FLOW (ALL LARGE + PORTRAIT PAIRS)
+   ============================================= */
+.modal-image-flow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin-top: 24px;
+}
+
+.flow-item {
+    background: var(--glass-bg);
+    border-radius: 0;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    object-fit: contain;
+    width: 100%;
+    max-height: 80vh;
+}
+
+.flow-item.landscape {
+    width: 100%;
+}
+
+.flow-item.portrait {
+    width: calc(50% - 12px);
+}
+
+.flow-item:hover {
+    transform: scale(1.02);
+}
+
+@media (max-width: 768px) {
+    .flow-item.portrait {
+        width: 100%;
+    }
+}

@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Joung Yunsu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-color: var(--bg-color);
+            padding-top: 120px;
+            /* Spacer for nav */
+        }
+
+        .cv-category {
+            margin-bottom: 60px;
+        }
+
+        .cv-category h3 {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 30px;
+            color: var(--text-color);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+            letter-spacing: 0.05em;
+        }
+
+        .cv-group-year {
+            display: flex;
+            margin-bottom: 30px;
+            align-items: flex-start;
+        }
+
+        .cv-year-col {
+            flex: 0 0 120px;
+            font-size: 0.95rem;
+            font-weight: 400;
+            color: var(--text-color);
+        }
+
+        .cv-desc-col {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .cv-row {
+            display: flex;
+            font-size: 0.85rem;
+            font-weight: 300;
+            line-height: 1.8;
+            color: var(--text-muted);
+        }
+
+        .cv-date {
+            flex: 0 0 120px;
+            color: var(--text-muted);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .cv-text {
+            flex: 1;
+        }
+
+        .cv-link {
+            color: var(--text-muted);
+            text-decoration: underline;
+            margin-left: 10px;
+            font-size: 0.85rem;
+            transition: color 0.3s;
+        }
+
+        .cv-link:hover {
+            color: var(--text-color);
+        }
+
+        .cv-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .cv-wrapper {
+                grid-template-columns: 1fr;
+            }
+            .cv-group-year {
+                flex-direction: column;
+                margin-bottom: 40px;
+            }
+
+            .cv-year-col {
+                margin-bottom: 15px;
+                border-bottom: 1px solid var(--glass-border);
+                width: 100%;
+                padding-bottom: 5px;
+            }
+
+            .cv-row {
+                flex-direction: column;
+                gap: 4px;
+                margin-bottom: 12px;
+            }
+
+            .cv-date {
+                flex: none;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav id="nav">
+        <a href="index.html" class="nav-logo">JNGYS</a>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link" data-en="Work" data-ko="작업">Work</a>
+            <a href="about.html" class="nav-link" data-en="About" data-ko="소개">About</a>
+            <a href="#contact" class="nav-link" data-en="Contact" data-ko="연락처">Contact</a>
+            <a href=" https://instagram.com/" target="_blank" class="nav-link">Instagram</a>
+            <button id="lang-toggle" class="lang-toggle" aria-label="Toggle language">KR</button>
+        </div>
+    </nav>
+
+    <!-- About Section -->
+    <section id="about">
+        <h2 class="section-title">About</h2>
+        <div class="about-content">
+            <div class="about-image">
+                <img src="https://res.cloudinary.com/dbgr7vngr/image/upload/v1773140546/jys_0290_v4sxk3.jpg"
+                    alt="Joung Yunsu Profile" loading="lazy">
+            </div>
+            <div class="about-text">
+                <p data-en="Joung Yunsu is a media artist based in Seoul, South Korea. Working at the intersection of digital technology and contemporary art, he creates immersive experiences through installation, performance, and audiovisual work."
+                    data-ko="정윤수는 대한민국 서울을 기반으로 활동하는 미디어 아티스트입니다. 디지털 기술과 현대 미술의 접점에서 설치, 퍼포먼스, 시청각 작업을 통해 몰입형 경험을 창조합니다.">
+                    Joung Yunsu is a media artist based in Seoul, South Korea. Working at the intersection of digital
+                    technology and contemporary art, he creates immersive experiences through installation, performance,
+                    and audiovisual work.</p>
+                <p data-en="His practice explores the poetic potential of data, light, and sound transforming digital processes into sensory, human experiences."
+                    data-ko="그의 작업은 데이터, 빛, 소리의 시적인 잠재력을 탐구하며, 디지털 과정을 감각적이고 인간적인 경험으로 변환합니다.">His
+                    practice explores the
+                    poetic potential of data, light, and sound transforming digital processes
+                    into sensory, human experiences.</p>
+            </div>
+            <div class="about-details">
+                <div class="about-block">
+                    <span class="about-label" data-en="Awards & Grants" data-ko="수상 및 선정 경력">Awards & Grants</span>
+                    <ul class="about-list">
+                        <li><span data-en="2024 Paradise Art Lab" data-ko="2024 파라다이스 아트랩">2024 Paradise Art Lab</span></li>
+                        <li><span data-en="2021 Art Center Nabi Creative Talent" data-ko="2021 아트센터 나비 창의인재 사업">2021 Art Center Nabi Creative Talent</span></li>
+                    </ul>
+                </div>
+                <div class="about-block">
+                    <span class="about-label" data-en="Clients & Partners" data-ko="파트너사">Clients & Partners</span>
+                    <div class="client-grid">
+                        <span data-en="Patek Philippe" data-ko="파텍필립">Patek Philippe</span>
+                        <span data-en="Hyundai Mobis" data-ko="현대모비스">Hyundai Mobis</span>
+                        <span data-en="Samsung SDI" data-ko="삼성 SDI">Samsung SDI</span>
+                        <span data-en="The Hyundai" data-ko="더현대">The Hyundai</span>
+                        <span data-en="Kolon" data-ko="코오롱">Kolon</span>
+                        <span data-en="Sulwhasoo" data-ko="설화수">Sulwhasoo</span>
+                        <span data-en="Newmix Coffee" data-ko="뉴믹스 커피">Newmix Coffee</span>
+                        <span data-en="SK Telecom" data-ko="SK텔레콤">SK Telecom</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CV Section -->
+    <section id="cv" style="padding-bottom: 80px; margin-top: 60px;">
+        <h2 class="section-title">CV</h2>
+        <div class="cv-wrapper" style="padding: 0 var(--padding);">
+
+            <div class="cv-category">
+                <h3>Exhibition / Performance</h3>
+
+                <div class="cv-group-year">
+                    <div class="cv-year-col">2025</div>
+                    <div class="cv-desc-col">
+                        <div class="cv-row">
+                            <span class="cv-date">11.28 - 02.28</span>
+                            <span class="cv-text">Atelier Nodeul Opening Exhibition | Group Exhibition <a
+                                    href="https://www.newsis.com/view/NISX20251125_0003415387" target="_blank"
+                                    class="cv-link">[Link]</a></span>
+                        </div>
+                        <div class="cv-row">
+                            <span class="cv-date">11.07 - 11.16</span>
+                            <span class="cv-text">Digital November MetaSensing | Group Exhibition <a
+                                    href="https://www.dailian.co.kr/news/view/1570424/?sc=Naver" target="_blank"
+                                    class="cv-link">[Link]</a></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cv-group-year">
+                    <div class="cv-year-col">2024</div>
+                    <div class="cv-desc-col">
+                        <div class="cv-row">
+                            <span class="cv-date">08.31 - 09.13</span>
+                            <span class="cv-text">Paradise Art Lab Festival | Exhibition <a
+                                    href="https://palfestival2024.com/yunsujoung/" target="_blank"
+                                    class="cv-link">[Link]</a></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cv-group-year">
+                    <div class="cv-year-col">2023</div>
+                    <div class="cv-desc-col">
+                        <div class="cv-row">
+                            <span class="cv-date">10.06 - 10.15</span>
+                            <span class="cv-text">Seoul Light Bitseom Festival | Exhibition <a
+                                    href="https://bitseomfestival.com/laser_art/hyperdrive" target="_blank"
+                                    class="cv-link">[Link]</a></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cv-group-year">
+                    <div class="cv-year-col">2022</div>
+                    <div class="cv-desc-col">
+                        <div class="cv-row">
+                            <span class="cv-date">09.10 - 10.31</span>
+                            <span class="cv-text">SAIC AUDI Beyond Human Emotion & History | Exhibition <a
+                                    href="https://mp.weixin.qq.com/s/1k_DzAKQXxRIE3ImCy3mKw" target="_blank"
+                                    class="cv-link">[Link]</a></span>
+                        </div>
+                        <div class="cv-row">
+                            <span class="cv-date">03.29 - 08.15</span>
+                            <span class="cv-text">Printf("Human odyssey") | Cheonan Museum of Art | Exhibition <a
+                                    href="https://www.camoa.or.kr/prog/dspyPrgrm/camoa/sub03_02/02/view.do"
+                                    target="_blank" class="cv-link">[Link]</a></span>
+                        </div>
+                        <div class="cv-row">
+                            <span class="cv-date">03.30</span>
+                            <span class="cv-text">Save The Planet | Performance <a href="http://www.moosunji.com/concert"
+                                    target="_blank" class="cv-link">[Link]</a></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cv-group-year">
+                    <div class="cv-year-col">2021</div>
+                    <div class="cv-desc-col">
+                        <div class="cv-row">
+                            <span class="cv-date"></span> /* Year only item */
+                            <span class="cv-text">Crystals (Virtual Crystals) | Mumokjuk Gallery | Solo Exhibition <a
+                                    href="https://joungyunsu.com/Work/view/2922559" target="_blank"
+                                    class="cv-link">[Link]</a></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cv-group-year">
+                    <div class="cv-year-col">2020</div>
+                    <div class="cv-desc-col">
+                        <div class="cv-row">
+                            <span class="cv-date"></span>
+                            <span class="cv-text">Data Holocene | Misajang Gallery | Exhibition <a
+                                    href="https://joungyunsu.com/Work/view/2075110" target="_blank"
+                                    class="cv-link">[Link]</a></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cv-group-year">
+                    <div class="cv-year-col">2017</div>
+                    <div class="cv-desc-col">
+                        <div class="cv-row">
+                            <span class="cv-date"></span>
+                            <span class="cv-text">White Flock | Ara Art Center | Exhibition <a
+                                    href="https://joungyunsu.com/Work/view/2075115" target="_blank"
+                                    class="cv-link">[Link]</a></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cv-category">
+                <h3>Project</h3>
+
+                <div class="cv-group-year">
+                    <div class="cv-year-col">2025</div>
+                    <div class="cv-desc-col">
+                        <div class="cv-row">
+                            <span class="cv-text">The Murderer's Report Movie | Artwork Sponsorship</span>
+                        </div>
+                        <div class="cv-row">
+                            <span class="cv-text">Patek Philippe | Brand Media Art Exhibition</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cv-group-year">
+                    <div class="cv-year-col">2024</div>
+                    <div class="cv-desc-col">
+                        <div class="cv-row">
+                            <span class="cv-text">Newmix Coffee | Media Art Production</span>
+                        </div>
+                        <div class="cv-row">
+                            <span class="cv-text">Kosmos Resort Ulleungdo | Media Art Production</span>
+                        </div>
+                        <div class="cv-row">
+                            <span class="cv-text">A Museum Manila | Media Art Production</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cv-group-year">
+                    <div class="cv-year-col">2023</div>
+                    <div class="cv-desc-col">
+                        <div class="cv-row">
+                            <span class="cv-text">Kolon Hannam | Local Project Media Art Exhibition</span>
+                        </div>
+                        <div class="cv-row">
+                            <span class="cv-text">Hyundai Mobis | Lobby Media Art Production</span>
+                        </div>
+                        <div class="cv-row">
+                            <span class="cv-text">Sulwhasoo Concentrated Ginseng Cream CF | Audiovisual Production</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cv-group-year">
+                    <div class="cv-year-col">2022</div>
+                    <div class="cv-desc-col">
+                        <div class="cv-row">
+                            <span class="cv-text">Samsung SDI PRIMX Exhibition | Media Art Production</span>
+                        </div>
+                        <div class="cv-row">
+                            <span class="cv-text">The Hyundai OOH Project | Media Art Production & Screening</span>
+                        </div>
+                        <div class="cv-row">
+                            <span class="cv-text">Raemian Gallery | Media Art Production & Screening</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cv-group-year">
+                    <div class="cv-year-col">2021</div>
+                    <div class="cv-desc-col">
+                        <div class="cv-row">
+                            <span class="cv-text">K-Arts Art Collider Lab × Siheung Traditional Art Troupe 'Gasirungcha' | Performance Video Production</span>
+                        </div>
+                        <div class="cv-row">
+                            <span class="cv-text">Art Center Nabi | Creative Talent Selected Artist</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cv-group-year">
+                    <div class="cv-year-col">2019</div>
+                    <div class="cv-desc-col">
+                        <div class="cv-row">
+                            <span class="cv-text">UNESCO Creative City Jinju Network | Stage Video Production</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cv-group-year">
+                    <div class="cv-year-col">2018</div>
+                    <div class="cv-desc-col">
+                        <div class="cv-row">
+                            <span class="cv-text">SK Telecom 0 Handong | Artwork Exhibition</span>
+                        </div>
+                        <div class="cv-row">
+                            <span class="cv-text">ART-236 Place Camp | Artwork Exhibition</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2 class="section-title">Contact</h2>
+        <div class="contact-content">
+            <a href="mailto:joungyunsu@gmail.com" class="contact-link" id="contact-email">joungyunsu@gmail.com</a>
+            <a href="https://joungyunsu.com" target="_blank" class="contact-link"
+                id="contact-website">joungyunsu.com</a>
+            <a href="https://instagram.com/" target="_blank" class="contact-link" id="contact-instagram">Instagram</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <span>&copy; 2026 Joung Yunsu</span>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
