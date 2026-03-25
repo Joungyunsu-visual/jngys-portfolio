@@ -32,7 +32,7 @@
 
     --bg-base: #e6e8eb;
     /* 사진 톤과 매칭되는 차분한 쿨 그레이 계열 */
-    --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font: 'Inter', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
     --padding: clamp(24px, 4vw, 60px);
 }
 
@@ -629,6 +629,121 @@ ul {
 }
 
 /* =============================================
+   HAMBURGER (hidden on desktop)
+   ============================================= */
+.hamburger {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 28px;
+    height: 20px;
+    position: relative;
+    z-index: 200;
+}
+
+.hamburger span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--text-color);
+    position: absolute;
+    left: 0;
+    transition: transform 0.35s ease, opacity 0.35s ease;
+}
+
+.hamburger span:first-child {
+    top: 4px;
+}
+
+.hamburger span:last-child {
+    bottom: 4px;
+}
+
+.hamburger.open span:first-child {
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+}
+
+.hamburger.open span:last-child {
+    bottom: 50%;
+    transform: translateY(50%) rotate(-45deg);
+}
+
+/* =============================================
+   MOBILE NAV DROPDOWN (hidden on desktop)
+   ============================================= */
+.mobile-nav {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 150;
+    background: var(--bg-base);
+    padding: 80px var(--padding) 32px;
+    flex-direction: column;
+    gap: 24px;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    transform: translateY(-100%);
+    opacity: 0;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+}
+
+.mobile-nav.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.mobile-nav-link {
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: var(--text-color);
+    text-decoration: none;
+    opacity: 0.7;
+    transition: opacity 0.3s;
+}
+
+.mobile-nav-link:hover {
+    opacity: 1;
+}
+
+/* =============================================
+   MOBILE TAB BAR (hidden on desktop)
+   ============================================= */
+.mobile-tab-bar {
+    display: none;
+    gap: 32px;
+    padding: 0 var(--padding);
+    position: sticky;
+    top: 60px;
+    z-index: 90;
+    background: var(--bg-base);
+    padding-bottom: 16px;
+    padding-top: 8px;
+}
+
+.mobile-tab {
+    background: none;
+    border: none;
+    font-family: var(--font);
+    font-size: 1.8rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-color);
+    opacity: 0.25;
+    cursor: pointer;
+    transition: opacity 0.4s ease;
+    padding: 0;
+}
+
+.mobile-tab.active {
+    opacity: 1;
+}
+
+/* =============================================
    RESPONSIVE
    ============================================= */
 @media (max-width: 1024px) {
@@ -642,15 +757,83 @@ ul {
 }
 
 @media (max-width: 768px) {
+    /* Nav */
     #nav {
         padding: 12px 0;
         top: 16px;
     }
 
     .nav-links {
-        gap: 20px;
+        display: none;
     }
 
+    .hamburger {
+        display: block;
+    }
+
+    .mobile-nav {
+        display: flex;
+    }
+
+    /* Mobile tab bar */
+    .mobile-tab-bar {
+        display: flex;
+    }
+
+    /* Split section → stacked full-width, scrollable */
+    .split-section {
+        height: auto;
+        min-height: 100vh;
+        flex-direction: column;
+        overflow: visible;
+        padding-top: 60px;
+    }
+
+    .split-pane {
+        width: 100% !important;
+        height: auto;
+        overflow: visible;
+        border-right: none !important;
+        transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    .pane-header {
+        display: none;
+    }
+
+    .pane-scroll {
+        overflow: visible;
+        padding-bottom: 24px;
+    }
+
+    /* Dissolve: hide the inactive pane */
+    .split-pane.mobile-hidden {
+        opacity: 0;
+        visibility: hidden;
+        position: absolute;
+        pointer-events: none;
+        height: 0;
+        overflow: hidden;
+    }
+
+    .split-pane.mobile-visible {
+        opacity: 1;
+        visibility: visible;
+        position: relative;
+        pointer-events: auto;
+    }
+
+    /* Single column grid */
+    .pane-left .works-grid-inner,
+    .pane-right .works-grid-inner,
+    .split-section.expand-left .pane-left .works-grid-inner,
+    .split-section.expand-left .pane-right .works-grid-inner,
+    .split-section.expand-right .pane-left .works-grid-inner,
+    .split-section.expand-right .pane-right .works-grid-inner {
+        grid-template-columns: 1fr;
+    }
+
+    /* General responsive */
     .nav-link {
         font-size: 0.75rem;
     }
@@ -713,4 +896,12 @@ ul {
     .flow-item.portrait {
         width: 100%;
     }
+}
+
+html[lang="en"] .kr-content {
+    display: none !important;
+}
+
+html[lang="ko"] .en-content {
+    display: none !important;
 }

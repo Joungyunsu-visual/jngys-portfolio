@@ -9,9 +9,9 @@
         content="Joung Yunsu Media artist based in Seoul. Exhibition, project, and performance archive.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2family=Roboto:wght@100;300;400;500;700;900&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="cv.css">
 </head>
@@ -30,7 +30,25 @@
             <a href=" https://instagram.com/" target="_blank" class="nav-link">Instagram</a>
             <button id="lang-toggle" class="lang-toggle" aria-label="Toggle language">KR</button>
         </div>
+        <button id="hamburger" class="hamburger" aria-label="Open menu">
+            <span></span><span></span>
+        </button>
     </nav>
+
+    <!-- Mobile Nav Dropdown -->
+    <div id="mobile-nav" class="mobile-nav">
+        <a href="index.html" class="mobile-nav-link" data-en="Work" data-ko="작업">Work</a>
+        <a href="about.html" class="mobile-nav-link" data-en="About" data-ko="소개">About</a>
+        <a href="about.html#contact" class="mobile-nav-link" data-en="Contact" data-ko="연락처">Contact</a>
+        <a href="https://instagram.com/" target="_blank" class="mobile-nav-link">Instagram</a>
+        <button id="lang-toggle-mobile" class="lang-toggle" aria-label="Toggle language">KR</button>
+    </div>
+
+    <!-- Mobile Tab Bar -->
+    <div class="mobile-tab-bar" id="mobile-tab-bar">
+        <button class="mobile-tab active" data-target="work" data-en="WORK" data-ko="작업">WORK</button>
+        <button class="mobile-tab" data-target="project" data-en="PROJECT" data-ko="프로젝트">PROJECT</button>
+    </div>
 
     <!-- Works Section -->
     <section id="works" class="split-section">

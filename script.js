@@ -237,7 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 `;
                 
-                if (desc) contentHTML += `<p class="modal-desc" style="text-align:center; margin-bottom:24px;">${desc}</p>`;
+                if (desc) contentHTML += `<div class="modal-desc" style="text-align:center; margin-bottom:24px;">${desc}</div>`;
                 if (credits) {
                     contentHTML += `<div class="modal-credits">`;
                     for (const [role, name] of Object.entries(credits)) {
@@ -306,20 +306,95 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial render: WORK, PROJECT elements
     buildCards();
 
-    // Language Toggle
-    if (toggle) {
-        toggle.addEventListener('click', () => {
-            currentLang = currentLang === 'en' ? 'ko' : 'en';
-            toggle.textContent = currentLang === 'en' ? 'KR' : 'EN';
-            const translatables = document.querySelectorAll('[data-en][data-ko]');
-            translatables.forEach(el => {
-                if (el.classList.contains('hero-desc')) {
-                    blurReveal(el, el.getAttribute(`data-${currentLang}`));
-                } else {
-                    el.textContent = el.getAttribute(`data-${currentLang}`);
-                }
+    // ─── Mobile: Hamburger Toggle ─────────────────────────────────────
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobile-nav');
+
+    if (hamburger && mobileNav) {
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('open');
+            mobileNav.classList.toggle('show');
+        });
+
+        // Close mobile nav when clicking a link
+        mobileNav.querySelectorAll('.mobile-nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('open');
+                mobileNav.classList.remove('show');
             });
         });
+    }
+
+    // ─── Mobile: WORK / PROJECT Tab Dissolve ──────────────────────────
+    const mobileTabs = document.querySelectorAll('.mobile-tab');
+    const isMobile = () => window.matchMedia('(max-width: 768px)').matches;
+
+    function setMobilePane(target) {
+        if (!paneLeft || !paneRight) return;
+        if (target === 'work') {
+            paneLeft.classList.add('mobile-visible');
+            paneLeft.classList.remove('mobile-hidden');
+            paneRight.classList.add('mobile-hidden');
+            paneRight.classList.remove('mobile-visible');
+        } else {
+            paneRight.classList.add('mobile-visible');
+            paneRight.classList.remove('mobile-hidden');
+            paneLeft.classList.add('mobile-hidden');
+            paneLeft.classList.remove('mobile-visible');
+        }
+    }
+
+    // Initialize mobile state
+    if (isMobile()) {
+        setMobilePane('work');
+    }
+
+    mobileTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            mobileTabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            setMobilePane(tab.getAttribute('data-target'));
+        });
+    });
+
+    // Handle resize: clean up mobile classes when switching back to desktop
+    window.addEventListener('resize', () => {
+        if (!isMobile()) {
+            if (paneLeft) { paneLeft.classList.remove('mobile-visible', 'mobile-hidden'); }
+            if (paneRight) { paneRight.classList.remove('mobile-visible', 'mobile-hidden'); }
+        } else {
+            const activeTab = document.querySelector('.mobile-tab.active');
+            if (activeTab) setMobilePane(activeTab.getAttribute('data-target'));
+        }
+    });
+
+    // ─── Language Toggle (sync desktop + mobile) ──────────────────────
+    const toggleMobile = document.getElementById('lang-toggle-mobile');
+
+    function switchLang() {
+        currentLang = currentLang === 'en' ? 'ko' : 'en';
+        document.documentElement.setAttribute('lang', currentLang);
+        const label = currentLang === 'en' ? 'KR' : 'EN';
+        if (toggle) toggle.textContent = label;
+        if (toggleMobile) toggleMobile.textContent = label;
+        const translatables = document.querySelectorAll('[data-en][data-ko]');
+        translatables.forEach(el => {
+            if (el.classList.contains('hero-desc')) {
+                blurReveal(el, el.getAttribute(`data-${currentLang}`));
+            } else {
+                el.textContent = el.getAttribute(`data-${currentLang}`);
+            }
+        });
+        // Close mobile nav after language switch
+        if (hamburger) hamburger.classList.remove('open');
+        if (mobileNav) mobileNav.classList.remove('show');
+    }
+
+    if (toggle) {
+        toggle.addEventListener('click', switchLang);
+    }
+    if (toggleMobile) {
+        toggleMobile.addEventListener('click', switchLang);
     }
 
     // Modal Close logic
