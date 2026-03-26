@@ -24,61 +24,8 @@ const WORKS = [
         year: 2025,
         category: 'work',
         main: 'https://res.cloudinary.com/dbgr7vngr/image/upload/v1773058228/%EC%95%84%EB%9C%B0%EB%A6%AC%EC%97%90_%EB%85%B8%EB%93%A4_%EB%A1%9C%EC%A6%90%EB%A6%B0_2__%EA%B2%B0%EA%B3%BC_%EA%B2%B0%EA%B3%BC_xwqbfj.webp',
-        desc: `
-            <div class="atelier-desc" style="text-align: left; max-width: 900px; margin: 0 auto; padding: 20px;">
-                <!-- Korean -->
-                <div class="kr-content">
-                    <h3 style="font-size: 1.8rem; font-weight: 500; margin-bottom: 16px; word-break: keep-all; line-height: 1.4;">자연의 호흡과 도시의 맥박이 교차하는 섬, 노들</h3>
-                    <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 40px; word-break: keep-all; color: var(--text-color);">
-                        서울의 중심을 관통하는 한강과 그 위를 부유하는 상징적인 공간 노들섬을 배경으로, 자연의 환경과 도시의 역동성이 맺는 관계를 미디어아트로 풀어냈습니다. 끊임없이 이동하는 사람들과 차들, 도시의 주요한 혈맥인 한강의 흐름 속에서 섬이 품고 있는 '바람'과 '조화'에 주목했습니다.
-                    </p>
-
-                    <h4 style="font-size: 1.4rem; font-weight: 500; margin-bottom: 24px;">전시 작품</h4>
-                    
-                    <div style="margin-bottom: 32px;">
-                        <h5 style="font-size: 1.2rem; font-weight: 500; margin-bottom: 12px;">1. 로즐린 (Roslyn) 연작</h5>
-                        <p style="margin-bottom: 8px;"><strong>Concept:</strong> 색채의 전이와 연결</p>
-                        <p style="line-height: 1.6; color: var(--text-color);">
-                            <strong>Description:</strong> 노들섬이라는 물리적 공간에서 시작된 시각적 에너지가 한강의 수면으로 유려하게 이어지는 과정을 담았습니다. 공간을 채우는 섬세한 색감의 확장을 통해, 단절되어 있던 섬과 강의 경계를 허물고 시각적인 조화를 유도합니다.
-                        </p>
-                    </div>
-
-                    <div style="margin-bottom: 60px;">
-                        <h5 style="font-size: 1.2rem; font-weight: 500; margin-bottom: 12px;">2. 후라칸 (Huracan)</h5>
-                        <p style="margin-bottom: 8px;"><strong>Concept:</strong> 보이지 않는 바람의 시각화</p>
-                        <p style="line-height: 1.6; color: var(--text-color);">
-                            <strong>Description:</strong> 한강을 스치는 차갑고 예리한 물바람과, 쉼 없이 교차하는 도시의 빠르고 역동적인 호흡을 융합했습니다. 도시와 자연이 부딪히며 만들어내는 거칠지만 생동감 넘치는 바람의 에너지를 시각적으로 포착해 낸 작업입니다.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- English -->
-                <div class="en-content" style="padding-top: 40px; border-top: 1px solid var(--glass-border);">
-                    <h3 style="font-size: 1.8rem; font-weight: 500; margin-bottom: 16px; line-height: 1.4;">An Island Where the Breath of Nature and the Pulse of the City Intersect, Nodeul</h3>
-                    <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 40px; color: var(--text-color);">
-                        Set against the backdrop of Nodeul Island, a symbolic space floating above the Han River that pierces the center of Seoul, this media art explores the relationship between the natural environment and urban dynamism. Amidst the endless movement of people and vehicles, and the flow of the Han River—the city's main artery—we focused on the 'wind' and 'harmony' embraced by the island.
-                    </p>
-
-                    <h4 style="font-size: 1.4rem; font-weight: 500; margin-bottom: 24px;">Exhibition Works</h4>
-                    
-                    <div style="margin-bottom: 32px;">
-                        <h5 style="font-size: 1.2rem; font-weight: 500; margin-bottom: 12px;">1. Roslyn Series</h5>
-                        <p style="margin-bottom: 8px;"><strong>Concept:</strong> Transition and Connection of Color</p>
-                        <p style="line-height: 1.6; color: var(--text-color);">
-                            <strong>Description:</strong> It captures the process by which visual energy originating from the physical space of Nodeul Island flows gracefully onto the surface of the Han River. Through the expansion of delicate colors filling the space, it breaks down the boundaries between the island and the river, inducing visual harmony.
-                        </p>
-                    </div>
-
-                    <div style="margin-bottom: 32px;">
-                        <h5 style="font-size: 1.2rem; font-weight: 500; margin-bottom: 12px;">2. Huracan</h5>
-                        <p style="margin-bottom: 8px;"><strong>Concept:</strong> Visualization of the Invisible Wind</p>
-                        <p style="line-height: 1.6; color: var(--text-color);">
-                            <strong>Description:</strong> It fuses the cold, sharp water breeze brushing past the Han River with the fast, dynamic breath of the endlessly crossing city. This work visually captures the rough yet vibrant energy of the wind created by the collision between the city and nature.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        `,
+        desc: "<b>자연의 호흡과 도시의 맥박이 교차하는 섬, 노들</b><br>서울의 중심을 관통하는 한강과 그 위를 부유하는 상징적인 공간 노들섬을 배경으로, 자연의 환경과 도시의 역동성이 맺는 관계를 미디어아트로 풀어냈습니다. 끊임없이 이동하는 사람들과 차들, 도시의 주요한 혈맥인 한강의 흐름 속에서 섬이 품고 있는 '바람'과 '조화'에 주목했습니다.<br><br><b>전시 작품</b><br><b>1. 로즐린 (Roslyn) 연작</b><br>Concept: 색채의 전이와 연결<br>Description: 노들섬이라는 물리적 공간에서 시작된 시각적 에너지가 한강의 수면으로 유려하게 이어지는 과정을 담았습니다. 공간을 채우는 섬세한 색감의 확장을 통해, 단절되어 있던 섬과 강의 경계를 허물고 시각적인 조화를 유도합니다.<br><br><b>2. 후라칸 (Huracan)</b><br>Concept: 보이지 않는 바람의 시각화<br>Description: 한강을 스치는 차갑고 예리한 물바람과, 쉼 없이 교차하는 도시의 빠르고 역동적인 호흡을 융합했습니다. 도시와 자연이 부딪히며 만들어내는 거칠지만 생동감 넘치는 바람의 에너지를 시각적으로 포착해 낸 작업입니다.<br><br><br><b>An Island Where the Breath of Nature and the Pulse of the City Intersect, Nodeul</b><br>Set against the backdrop of Nodeul Island, a symbolic space floating above the Han River that pierces the center of Seoul, this media art explores the relationship between the natural environment and urban dynamism. Amidst the endless movement of people and vehicles, and the flow of the Han River—the city's main artery—we focused on the 'wind' and 'harmony' embraced by the island.<br><br><b>Exhibition Works</b><br><b>1. Roslyn Series</b><br>Concept: Transition and Connection of Color<br>Description: It captures the process by which visual energy originating from the physical space of Nodeul Island flows gracefully onto the surface of the Han River. Through the expansion of delicate colors filling the space, it breaks down the boundaries between the island and the river, inducing visual harmony.<br><br><b>2. Huracan</b><br>Concept: Visualization of the Invisible Wind<br>Description: It fuses the cold, sharp water breeze brushing past the Han River with the fast, dynamic breath of the endlessly crossing city. This work visually captures the rough yet vibrant energy of the wind created by the collision between the city and nature.",
+        credits: { Sound: 'Bley' },
         images: [
             'https://res.cloudinary.com/dbgr7vngr/image/upload/v1773058231/%EC%95%84%EB%9C%B0%EB%A6%AC%EC%97%90_%EB%85%B8%EB%93%A4_%ED%9B%84%EB%9D%BC%EC%B9%B8_2__%EA%B2%B0%EA%B3%BC_%EA%B2%B0%EA%B3%BC_ynwg8t.webp',
             'https://res.cloudinary.com/dbgr7vngr/image/upload/v1773810711/%EC%95%84%EB%9C%B0%EB%A6%AC%EC%97%90_%EB%85%B8%EB%93%A4_%EB%A1%9C%EC%A6%90%EB%A6%B0_4__%EA%B2%B0%EA%B3%BC_jvlrhw.webp',
