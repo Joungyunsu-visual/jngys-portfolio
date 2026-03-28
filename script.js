@@ -105,42 +105,105 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ─── Core Logic ─────────────────────────────────────────────────────
 
-        function buildCards(items, gridElement) {
-            gridElement.innerHTML = '';
-            items.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'work-card';
-                card.setAttribute('data-id', item.title);
-                card.setAttribute('data-title', item.title);
-                card.setAttribute('data-year', item.year || '');
-                card.setAttribute('data-desc', item.desc || '');
-                card.setAttribute('data-main-img', item.main || '');
-                card.setAttribute('data-video', item.video || '');
-                card.setAttribute('data-extra', item.images ? JSON.stringify(item.images) : '[]');
-                if (item.credits) {
-                    card.setAttribute('data-credits', JSON.stringify(item.credits));
+    // Build modal content from a work data object
+    function showWorkModal(work) {
+        if (!modal || !modalBody) return;
+
+        const mainImgSrc = work.main ? cl(work.main, 'full') : '';
+        const title = work.title;
+        const year = work.year || '';
+        const desc = work.desc || '';
+        const credits = work.credits || null;
+        const videoSrc = work.video || '';
+        const extraImages = work.images ? work.images.map(u => cl(u, 'full')) : [];
+
+        let contentHTML = ``;
+
+        if (videoSrc) {
+            if (videoSrc.includes('youtube.com') || videoSrc.includes('youtu.be')) {
+                let ytId = '';
+                if (videoSrc.includes('youtu.be/')) {
+                    ytId = videoSrc.split('youtu.be/')[1].split('?')[0];
+                } else if (videoSrc.includes('youtube.com/watch')) {
+                    ytId = new URL(videoSrc).searchParams.get('v');
                 }
-
-                const mainImgSrc = item.main ? item.main : (item.images && item.images.length > 0 ? item.images[0] : '');
-
-                card.innerHTML = `
-                    <div class="work-image-placeholder">
-                        <img src="${mainImgSrc}" alt="${item.title}" loading="lazy">
-                    </div>
-                    <div class="work-meta">
-                        <h3 class="work-title">${item.title}</h3>
-                        <span class="work-year">${item.year || ''}</span>
-                    </div>
-                `;
-
-                // Add click listener
-                card.addEventListener('click', () => {
-                    openModal(card);
-                });
-
-                gridElement.appendChild(card);
-            });
+                if (ytId) {
+                    contentHTML += `<div style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden; margin-bottom:24px;">
+                        <iframe src="https://www.youtube.com/embed/${ytId}" style="position:absolute; top:0; left:0; width:100%; height:100%; border:0;" allowfullscreen></iframe>
+                    </div>`;
+                }
+            } else {
+                contentHTML += `<video src="${videoSrc}" class="modal-main-img" controls playsinline style="background:#000;"></video>`;
+            }
+        } else if (mainImgSrc) {
+            contentHTML += `<img src="${mainImgSrc}" alt="${title}" class="modal-main-img">`;
         }
+
+        // Text section right below main image
+        contentHTML += `<div class="modal-text-wrap" style="margin-bottom: 40px; padding: 0 16px;">`;
+        contentHTML += `
+            <div class="modal-header" style="text-align:center; margin-bottom:24px;">
+                <h3 class="modal-title" style="margin-bottom:4px;">${title}</h3>
+                <p class="modal-year" style="margin-bottom:0;">${year}</p>
+            </div>
+        `;
+
+        if (desc) contentHTML += `<div class="modal-desc" style="text-align:center; margin-bottom:24px;">${desc}</div>`;
+        if (credits) {
+            contentHTML += `<div class="modal-credits">`;
+            for (const [role, name] of Object.entries(credits)) {
+                contentHTML += `<div class="credit-item" style="display:flex; justify-content:center; margin-bottom:8px;">
+                    <span class="credit-role" style="min-width:140px; text-align:right; margin-right:16px;">${role}</span>
+                    <span style="min-width:140px; text-align:left;">${name}</span>
+                </div>`;
+            }
+            contentHTML += `</div>`;
+        }
+        contentHTML += `</div>`;
+
+        if (extraImages.length > 0) {
+            contentHTML += `<div class="modal-image-flow">`;
+            extraImages.forEach(src => {
+                contentHTML += `<img src="${src}" class="flow-item" alt="Extra Image" loading="lazy">`;
+            });
+            contentHTML += `</div>`;
+        }
+
+        modalBody.innerHTML = contentHTML;
+        modal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+
+        const modalImages = modalBody.querySelectorAll('img');
+        modalImages.forEach(img => {
+            if (img.classList.contains('flow-item')) {
+                const checkRatio = () => {
+                    if (img.naturalHeight > img.naturalWidth) {
+                        img.classList.add('portrait');
+                    } else {
+                        img.classList.add('landscape');
+                    }
+                };
+                if (img.complete && img.naturalHeight) {
+                    checkRatio();
+                } else {
+                    img.addEventListener('load', checkRatio);
+                }
+            }
+
+            img.addEventListener('click', () => {
+                if (openLightbox) openLightbox(img.src);
+            });
+        });
+    }
+
+    // Open modal by slug (for deep linking)
+    function openModalBySlug(slug) {
+        const work = WORKS.find(w => w.slug === slug);
+        if (work) {
+            showWorkModal(work);
+        }
+    }
+
     function buildCards() {
         const gridWork = document.getElementById('grid-work');
         const gridProject = document.getElementById('grid-project');
@@ -154,6 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
             card.className = 'work-card fade-in';
             card.href = '#';
             card.setAttribute('data-category', work.category);
+            card.setAttribute('data-slug', work.slug || '');
 
             if (work.images && work.images.length) {
                 const fullRes = work.images.map(u => cl(u, 'full'));
@@ -199,98 +263,12 @@ document.addEventListener('DOMContentLoaded', () => {
         newCards.forEach(card => {
             card.addEventListener('click', (e) => {
                 e.preventDefault();
-                const titleElement = card.querySelector('.work-title');
-                const yearElement = card.querySelector('.work-year');
-                const title = titleElement ? titleElement.textContent : 'Untitled';
-                const year = yearElement ? yearElement.textContent : '';
-                const imgEl = card.querySelector('img');
-                const mainImgSrc = imgEl ? imgEl.src : '';
-                let extraImages = [];
-                const imagesAttr = card.getAttribute('data-images');
-                if (imagesAttr) { try { extraImages = JSON.parse(imagesAttr); } catch (e) { } }
-                const desc = card.getAttribute('data-desc') || '';
-                let credits = null;
-                const creditsAttr = card.getAttribute('data-credits');
-                if (creditsAttr) { try { credits = JSON.parse(creditsAttr); } catch (e) { } }
-                const videoSrc = card.getAttribute('data-video') || '';
-
-                let contentHTML = ``;
-                
-                if (videoSrc) {
-                    if (videoSrc.includes('youtube.com') || videoSrc.includes('youtu.be')) {
-                        let ytId = '';
-                        if (videoSrc.includes('youtu.be/')) {
-                            ytId = videoSrc.split('youtu.be/')[1].split('?')[0];
-                        } else if (videoSrc.includes('youtube.com/watch')) {
-                            ytId = new URL(videoSrc).searchParams.get('v');
-                        }
-                        if (ytId) {
-                            contentHTML += `<div style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden; margin-bottom:24px;">
-                                <iframe src="https://www.youtube.com/embed/${ytId}" style="position:absolute; top:0; left:0; width:100%; height:100%; border:0;" allowfullscreen></iframe>
-                            </div>`;
-                        }
-                    } else {
-                        contentHTML += `<video src="${videoSrc}" class="modal-main-img" controls playsinline style="background:#000;"></video>`;
-                    }
-                } else if (mainImgSrc) {
-                    contentHTML += `<img src="${mainImgSrc}" alt="${title}" class="modal-main-img">`;
+                const slug = card.getAttribute('data-slug');
+                if (slug) {
+                    // Update URL hash (this triggers hashchange which opens the modal)
+                    history.pushState(null, '', '#work/' + slug);
+                    openModalBySlug(slug);
                 }
-
-                // Text section right below main image
-                contentHTML += `<div class="modal-text-wrap" style="margin-bottom: 40px; padding: 0 16px;">`;
-                contentHTML += `
-                    <div class="modal-header" style="text-align:center; margin-bottom:24px;">
-                        <h3 class="modal-title" style="margin-bottom:4px;">${title}</h3>
-                        <p class="modal-year" style="margin-bottom:0;">${year}</p>
-                    </div>
-                `;
-                
-                if (desc) contentHTML += `<div class="modal-desc" style="text-align:center; margin-bottom:24px;">${desc}</div>`;
-                if (credits) {
-                    contentHTML += `<div class="modal-credits">`;
-                    for (const [role, name] of Object.entries(credits)) {
-                        contentHTML += `<div class="credit-item" style="display:flex; justify-content:center; margin-bottom:8px;">
-                            <span class="credit-role" style="min-width:140px; text-align:right; margin-right:16px;">${role}</span>
-                            <span style="min-width:140px; text-align:left;">${name}</span>
-                        </div>`;
-                    }
-                    contentHTML += `</div>`;
-                }
-                contentHTML += `</div>`;
-                
-                if (extraImages.length > 0) {
-                    contentHTML += `<div class="modal-image-flow">`;
-                    extraImages.forEach(src => {
-                        contentHTML += `<img src="${src}" class="flow-item" alt="Extra Image" loading="lazy">`;
-                    });
-                    contentHTML += `</div>`;
-                }
-
-                modalBody.innerHTML = contentHTML;
-                modal.classList.add('show');
-                document.body.style.overflow = 'hidden';
-
-                const modalImages = modalBody.querySelectorAll('img');
-                modalImages.forEach(img => {
-                    if (img.classList.contains('flow-item')) {
-                        const checkRatio = () => {
-                            if (img.naturalHeight > img.naturalWidth) {
-                                img.classList.add('portrait');
-                            } else {
-                                img.classList.add('landscape');
-                            }
-                        };
-                        if (img.complete && img.naturalHeight) {
-                            checkRatio();
-                        } else {
-                            img.addEventListener('load', checkRatio);
-                        }
-                    }
-
-                    img.addEventListener('click', () => {
-                        if (openLightbox) openLightbox(img.src);
-                    });
-                });
             });
         });
     }
@@ -423,12 +401,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Modal Close logic
-    if (modal) {
-        const closeModal = modal.querySelector('.close-modal');
-        const closeFunc = () => {
+    const closeFunc = () => {
+        if (modal) {
             modal.classList.remove('show');
             document.body.style.overflow = '';
-        };
+        }
+        // Remove hash without triggering hashchange scroll
+        if (window.location.hash) {
+            history.pushState(null, '', window.location.pathname + window.location.search);
+        }
+    };
+    if (modal) {
+        const closeModal = modal.querySelector('.close-modal');
         if (closeModal) closeModal.addEventListener('click', closeFunc);
         modal.addEventListener('click', (e) => { if (e.target === modal) closeFunc(); });
     }
@@ -453,10 +437,34 @@ document.addEventListener('DOMContentLoaded', () => {
             if (lightbox && lightbox.classList.contains('show')) {
                 closeLightboxFunc();
             } else if (modal && modal.classList.contains('show')) {
+                closeFunc();
+            }
+        }
+    });
+
+    // ─── Deep Link: Hash-based routing ────────────────────────────────
+    function handleHash() {
+        const hash = window.location.hash;
+        if (hash.startsWith('#work/')) {
+            const slug = hash.replace('#work/', '');
+            openModalBySlug(slug);
+        }
+    }
+
+    // Handle browser back/forward
+    window.addEventListener('hashchange', () => {
+        if (window.location.hash.startsWith('#work/')) {
+            handleHash();
+        } else {
+            // Hash removed — close modal
+            if (modal && modal.classList.contains('show')) {
                 modal.classList.remove('show');
                 document.body.style.overflow = '';
             }
         }
     });
+
+    // Check hash on page load
+    handleHash();
 
 });

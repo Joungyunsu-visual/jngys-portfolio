@@ -20,6 +20,7 @@ function cl(url, size = 'thumb') {
 const WORKS = [
     // ─── 2025 ──────────────────────────────────────────────────────────────
     {
+        slug: 'atelier-nodeul-opening-exhibition',
         title: 'Atelier Nodeul Opening Exhibition',
         year: 2025,
         category: 'work',
@@ -34,6 +35,7 @@ const WORKS = [
         ],
     },
     {
+        slug: 'the-murderers-report-movie',
         title: "The Murderer's Report Movie",
         year: 2025,
         category: 'project',
@@ -47,12 +49,14 @@ const WORKS = [
         ],
     },
     {
+        slug: 'patek-philippe-brand-media-art',
         title: 'Patek Philippe Brand Media Art',
         year: 2025,
         category: 'project',
         main: 'https://res.cloudinary.com/dbgr7vngr/image/upload/v1773050566/Patek_pqk8gp.png',
     },
     {
+        slug: 'huracan',
         title: 'Huracan',
         year: 2025,
         category: 'work',
@@ -72,6 +76,7 @@ const WORKS = [
 
     // ─── 2024 ──────────────────────────────────────────────────────────────
     {
+        slug: 'abstraction',
         title: 'Abstraction',
         year: 2024,
         category: 'work',
@@ -85,6 +90,7 @@ const WORKS = [
         ]
     },
     {
+        slug: 'gosan',
         title: 'Gosan',
         year: 2024,
         category: 'work',
@@ -102,6 +108,7 @@ const WORKS = [
         ]
     },
     {
+        slug: 'paradise-art-lab-festival',
         title: 'Paradise Art Lab Festival',
         year: 2024,
         category: 'work',
@@ -117,6 +124,7 @@ const WORKS = [
         ],
     },
     {
+        slug: 'newmix-coffee',
         title: 'Newmix Coffee',
         year: 2024,
         category: 'project',
@@ -140,6 +148,7 @@ const WORKS = [
         ],
     },
     {
+        slug: 'kosmos-resort-ulleungdo',
         title: 'Kosmos Resort Ulleungdo',
         year: 2024,
         category: 'project',
@@ -163,6 +172,7 @@ const WORKS = [
         ],
     },
     {
+        slug: 'a-museum-manila',
         title: 'A Museum Manila',
         year: 2024,
         category: 'project',
@@ -180,6 +190,7 @@ const WORKS = [
 
     // ─── 2023 ──────────────────────────────────────────────────────────────
     {
+        slug: 'seoul-light-bitseom-festival',
         title: 'Seoul Light Bitseom Festival',
         year: 2023,
         category: 'work',
@@ -197,6 +208,7 @@ const WORKS = [
         ],
     },
     {
+        slug: 'kolon-hannam',
         title: 'Kolon Hannam',
         year: 2023,
         category: 'project',
@@ -206,6 +218,7 @@ const WORKS = [
         ],
     },
     {
+        slug: 'hyundai-mobis-lobby-media-art',
         title: 'Hyundai Mobis Lobby Media Art',
         year: 2023,
         category: 'project',
@@ -216,6 +229,7 @@ const WORKS = [
         ],
     },
     {
+        slug: 'sulwhasoo-concentrated-ginseng-cream',
         title: 'Sulwhasoo Concentrated Ginseng Cream',
         year: 2023,
         category: 'project',
@@ -231,6 +245,7 @@ const WORKS = [
 
     // ─── 2022 ──────────────────────────────────────────────────────────────
     {
+        slug: 'saic-audi-beyond-human-emotion-history',
         title: 'SAIC AUDI Beyond Human Emotion & History',
         year: 2022,
         category: 'work',
@@ -244,6 +259,7 @@ const WORKS = [
         ],
     },
     {
+        slug: 'save-the-planet',
         title: 'Save The Planet',
         year: 2022,
         category: 'work',
@@ -275,6 +291,7 @@ const WORKS = [
         ],
     },
     {
+        slug: 'printf-human-odyssey',
         title: 'Printf "Human Odyssey"',
         year: 2022,
         category: 'work',
@@ -284,12 +301,14 @@ const WORKS = [
         ],
     },
     {
+        slug: 'samsung-sdi-primx-exhibition',
         title: 'Samsung SDI PRIMX Exhibition',
         year: 2022,
         category: 'project',
         main: 'https://res.cloudinary.com/dbgr7vngr/image/upload/v1773144813/449ed962-0d8d-49b5-9226-2cc44067e193.png',
     },
     {
+        slug: 'the-hyundai-ooh',
         title: 'The Hyundai OOH',
         year: 2022,
         category: 'project',
@@ -304,7 +323,7 @@ const WORKS = [
     },
 
     // ─── 2021 ──────────────────────────────────────────────────────────────
-    { title: 'Crystals (2021, 2025 Digital November MetaSensing)', year: '2021, 2025', category: 'work',
+    { slug: 'crystals', title: 'Crystals (2021, 2025 Digital November MetaSensing)', year: '2021, 2025', category: 'work',
         main: 'https://res.cloudinary.com/dbgr7vngr/image/upload/v1773048606/Crystals_%EC%A0%84%EC%8B%9C_2_muslfy.jpg',
         desc: "&lt;Crystals&gt; (2021) is a generative data visualization projected on a 2m × 2.5m LED screen that explores the crystallization of cryptocurrency. Using real-time crypto market data and tweets as 'impurities', the artwork simulates how random market forces and human actions shape the value of virtual currency, much like geological pressures form natural mineral crystals.<br><br>The installation features a main projection alongside three data panels displaying live market prices and trading volume. By presenting these data-driven structures as brilliant jewels, the artist reframes the volatile nature of modern cryptocurrency through a lens of natural, organic growth.",
         credits: { Sound: 'Kohui' },
@@ -320,7 +339,7 @@ const WORKS = [
             'https://res.cloudinary.com/dbgr7vngr/image/upload/v1773812860/%EC%84%A4%EB%AA%853_xvfn3i.png',
         ],
     },
-    { title: 'White Flock', year: 2017, category: 'work',
+    { slug: 'white-flock', title: 'White Flock', year: 2017, category: 'work',
         main: 'https://res.cloudinary.com/dbgr7vngr/image/upload/v1773048459/WhiteFlock_Coex_vhsbu4.jpg',
         video: 'https://youtu.be/97DiyvIzy1A',
         desc: "<b>&lt;Exhibition&gt;</b><br/>2017.06.23 - 2017.06.25 | Gwacheon National Science Museum<br/>2018.05.18 - 2018.05.22 | Young Creative Korea 2018<br/>2018.03.03 - 2018.06.03 | Art-236 Place Camp Jeju<br/>2018.10.27 | 0 Handong (SK Telecom) Coex artium",
