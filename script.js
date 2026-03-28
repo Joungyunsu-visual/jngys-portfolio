@@ -108,10 +108,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // Build modal content from a work data object
     function showWorkModal(work) {
         if (!modal || !modalBody) return;
+        modal.setAttribute('data-slug', work.slug || '');
 
         const mainImgSrc = work.main ? cl(work.main, 'full') : '';
         const title = work.title;
         const year = work.year || '';
+        const genre = work.genre || '';
+        const descKo = work.descKo || '';
+        const descEn = work.descEn || '';
         const desc = work.desc || '';
         const credits = work.credits || null;
         const videoSrc = work.video || '';
@@ -142,15 +146,20 @@ document.addEventListener('DOMContentLoaded', () => {
         // Text section right below main image
         contentHTML += `<div class="modal-text-wrap" style="margin-bottom: 40px; padding: 0 16px;">`;
         contentHTML += `
-            <div class="modal-header" style="text-align:center; margin-bottom:24px;">
+            <div class="modal-header" style="text-align:center; margin-bottom:12px;">`;
+            
+        if (genre) {
+            contentHTML += `<div class="modal-genre" style="display:inline-block; border:1px solid currentColor; padding:6px 16px; font-size:12px; letter-spacing:1px; margin-bottom:20px; text-transform:uppercase;">${genre}</div>`;
+        }
+            
+        contentHTML += `
                 <h3 class="modal-title" style="margin-bottom:4px;">${title}</h3>
                 <p class="modal-year" style="margin-bottom:0;">${year}</p>
             </div>
         `;
 
-        if (desc) contentHTML += `<div class="modal-desc" style="text-align:center; margin-bottom:24px;">${desc}</div>`;
         if (credits) {
-            contentHTML += `<div class="modal-credits">`;
+            contentHTML += `<div class="modal-credits" style="padding-bottom:24px;">`;
             for (const [role, name] of Object.entries(credits)) {
                 contentHTML += `<div class="credit-item" style="display:flex; justify-content:center; margin-bottom:8px;">
                     <span class="credit-role" style="min-width:140px; text-align:right; margin-right:16px;">${role}</span>
@@ -159,18 +168,36 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             contentHTML += `</div>`;
         }
+
+        if (desc) contentHTML += `<div class="modal-desc" style="text-align:center; margin-bottom:24px;">${desc}</div>`;
+        
         contentHTML += `</div>`;
 
         if (extraImages.length > 0) {
             contentHTML += `<div class="modal-image-flow">`;
-            extraImages.forEach(src => {
+            extraImages.forEach((src, index) => {
                 contentHTML += `<img src="${src}" class="flow-item" alt="Extra Image" loading="lazy">`;
+                
+                // Show Korean description after the FIRST extra image
+                if (index === 0 && descKo) {
+                    contentHTML += `<div class="modal-desc" style="text-align:center; margin:40px 16px;">${descKo}</div>`;
+                }
+                
+                // Show English description after the LAST extra image
+                if (index === extraImages.length - 1 && descEn) {
+                    contentHTML += `<div class="modal-desc" style="text-align:center; margin:40px 16px;">${descEn}</div>`;
+                }
             });
             contentHTML += `</div>`;
+        } else {
+            // Edge case: if there are no extra images but descriptions exist
+            if (descKo) contentHTML += `<div class="modal-desc" style="text-align:center; margin:40px 16px;">${descKo}</div>`;
+            if (descEn) contentHTML += `<div class="modal-desc" style="text-align:center; margin:40px 16px;">${descEn}</div>`;
         }
 
         modalBody.innerHTML = contentHTML;
         modal.classList.add('show');
+        modal.scrollTop = 0;
         document.body.style.overflow = 'hidden';
 
         const modalImages = modalBody.querySelectorAll('img');

@@ -449,7 +449,7 @@ ul {
     padding: clamp(24px, 4vw, 40px);
     border: 1px solid var(--glass-border);
     width: 90%;
-    max-width: 900px;
+    max-width: 1400px;
     border-radius: 8px;
     box-shadow: 0 24px 48px rgba(0, 0, 0, 0.1);
     position: relative;
@@ -914,6 +914,11 @@ ul {
 
 .flow-item.portrait {
     width: calc(50% - 12px);
+}
+
+.work-modal[data-slug="the-murderers-report-movie"] .modal-image-flow img:first-of-type.portrait,
+.work-modal[data-slug="villa-somme-ulleungdo"] .modal-image-flow img:first-of-type.portrait {
+    width: 100%;
 }
 
 .flow-item:hover {
