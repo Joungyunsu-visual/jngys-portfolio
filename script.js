@@ -58,16 +58,22 @@ document.addEventListener('DOMContentLoaded', () => {
         paneLeft.addEventListener('mouseenter', () => {
             if (hoverTimer) clearTimeout(hoverTimer);
             hoverTimer = setTimeout(() => {
+                if (splitSection.classList.contains('expand-left')) return;
                 splitSection.classList.remove('expand-right');
                 splitSection.classList.add('expand-left');
+                document.getElementById('scroll-project')?.scrollTo({ top: 0, behavior: 'smooth' });
+                document.getElementById('scroll-work')?.scrollTo({ top: 0, behavior: 'smooth' });
             }, 80);
         });
 
         paneRight.addEventListener('mouseenter', () => {
             if (hoverTimer) clearTimeout(hoverTimer);
             hoverTimer = setTimeout(() => {
+                if (splitSection.classList.contains('expand-right')) return;
                 splitSection.classList.remove('expand-left');
                 splitSection.classList.add('expand-right');
+                document.getElementById('scroll-project')?.scrollTo({ top: 0, behavior: 'smooth' });
+                document.getElementById('scroll-work')?.scrollTo({ top: 0, behavior: 'smooth' });
             }, 80);
         });
     }

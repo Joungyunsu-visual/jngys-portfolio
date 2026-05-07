@@ -191,7 +191,7 @@ ul {
 }
 
 .pane-header {
-    flex-shrink: 0; /* do not shrink */
+    flex-shrink: 0;
     z-index: 10;
     padding: 20px var(--padding) 30px;
     background: transparent;
@@ -223,10 +223,7 @@ ul {
 }
 
 .works-grid-inner {
-    display: grid;
-    gap: 32px 24px;
     padding: 0 var(--padding);
-    align-items: start;
 }
 
 .work-card {
@@ -237,31 +234,36 @@ ul {
     cursor: pointer;
     will-change: transform;
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    break-inside: avoid;
+    margin-bottom: 32px;
 }
 
 /* Default JS expanded state assumes left is expanded initially */
 .pane-left .works-grid-inner {
-    grid-template-columns: 1fr 1fr;
+    columns: 2;
+    column-gap: 16px;
 }
 
 .pane-right .works-grid-inner {
-    grid-template-columns: 1fr;
+    columns: 1;
 }
 
 /* When Javascript adds .expand-right to .split-section */
 .split-section.expand-right .pane-left .works-grid-inner {
-    grid-template-columns: 1fr;
+    columns: 1;
 }
 .split-section.expand-right .pane-right .works-grid-inner {
-    grid-template-columns: 1fr 1fr;
+    columns: 2;
+    column-gap: 16px;
 }
 
 /* Explicit left expansion */
 .split-section.expand-left .pane-left .works-grid-inner {
-    grid-template-columns: 1fr 1fr;
+    columns: 2;
+    column-gap: 16px;
 }
 .split-section.expand-left .pane-right .works-grid-inner {
-    grid-template-columns: 1fr;
+    columns: 1;
 }
 
 .work-card:hover {
@@ -759,6 +761,15 @@ ul {
 /* =============================================
    RESPONSIVE
    ============================================= */
+
+
+@media (min-width: 1600px) {
+    .split-section {
+        padding-left: clamp(60px, 6vw, 160px);
+        padding-right: clamp(60px, 6vw, 160px);
+    }
+}
+
 @media (max-width: 1024px) {
     .works-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -840,14 +851,14 @@ ul {
         pointer-events: auto;
     }
 
-    /* Single column grid */
+    /* Single column masonry on mobile */
     .pane-left .works-grid-inner,
     .pane-right .works-grid-inner,
     .split-section.expand-left .pane-left .works-grid-inner,
     .split-section.expand-left .pane-right .works-grid-inner,
     .split-section.expand-right .pane-left .works-grid-inner,
     .split-section.expand-right .pane-right .works-grid-inner {
-        grid-template-columns: 1fr;
+        columns: 1;
     }
 
     /* General responsive */
