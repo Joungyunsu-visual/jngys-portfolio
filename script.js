@@ -47,29 +47,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ─── Split pane persistent hover ──────────────────────────────────────
     const splitSection = document.querySelector('.split-section');
-    const paneLeft = document.getElementById('pane-work');
-    const paneRight = document.getElementById('pane-project');
-    
+    const paneLeft = document.getElementById('pane-project');
+    const paneRight = document.getElementById('pane-work');
+
     if (splitSection && paneLeft && paneRight) {
-        // Initialize default state
         splitSection.classList.add('expand-left');
-        
+
+        let hoverTimer = null;
+
         paneLeft.addEventListener('mouseenter', () => {
-            splitSection.classList.remove('expand-right');
-            splitSection.classList.add('expand-left');
-            const scrollWork = document.getElementById('scroll-work');
-            const scrollProject = document.getElementById('scroll-project');
-            if (scrollWork) scrollWork.scrollTop = 0;
-            if (scrollProject) scrollProject.scrollTop = 0;
+            if (hoverTimer) clearTimeout(hoverTimer);
+            hoverTimer = setTimeout(() => {
+                splitSection.classList.remove('expand-right');
+                splitSection.classList.add('expand-left');
+            }, 80);
         });
-        
+
         paneRight.addEventListener('mouseenter', () => {
-            splitSection.classList.remove('expand-left');
-            splitSection.classList.add('expand-right');
-            const scrollWork = document.getElementById('scroll-work');
-            const scrollProject = document.getElementById('scroll-project');
-            if (scrollWork) scrollWork.scrollTop = 0;
-            if (scrollProject) scrollProject.scrollTop = 0;
+            if (hoverTimer) clearTimeout(hoverTimer);
+            hoverTimer = setTimeout(() => {
+                splitSection.classList.remove('expand-left');
+                splitSection.classList.add('expand-right');
+            }, 80);
         });
     }
 
@@ -360,7 +359,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function setMobilePane(target) {
         if (!paneLeft || !paneRight) return;
-        if (target === 'work') {
+        if (target === 'project') {
             paneLeft.classList.add('mobile-visible');
             paneLeft.classList.remove('mobile-hidden');
             paneRight.classList.add('mobile-hidden');
@@ -375,7 +374,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize mobile state
     if (isMobile()) {
-        setMobilePane('work');
+        setMobilePane('project');
     }
 
     mobileTabs.forEach(tab => {
