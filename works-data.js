@@ -290,7 +290,7 @@ const WORKS = [
         credits: {
             'Music': 'VRI STRING QUARTET (Yongeun Park, Sunghee Ko, Seunggu Lee, Jibak) @vri_string_quartet_vsq',
             'Guest': 'Bumjun Ko @ko_bum_jun',
-            'Media Art': 'Joung Yunsu @joungyunsu',
+            'Media Art': 'Joung Yunsu @j.eongyunsu',
             'MV': 'Chamsae Kim @kimchamsae',
             'Director': 'Hanna Jung @b_ingbing',
             'Sound': 'Sangyong Min',
