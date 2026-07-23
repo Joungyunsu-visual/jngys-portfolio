@@ -147,7 +147,7 @@ const WORKS = [
             Team: '@newmixcoffee.kr',
             Sound: 'Studio Namsan, Jeon Yongheyeon',
             Space: '@ggjh.kr',
-            'Media Art': 'Joung Yunsu',
+            'Media Art': 'Jeong Yunsu',
             Adviser: 'Kim bongjin',
             Photograph: 'Park yoochun',
         },
@@ -290,7 +290,7 @@ const WORKS = [
         credits: {
             'Music': 'VRI STRING QUARTET (Yongeun Park, Sunghee Ko, Seunggu Lee, Jibak) @vri_string_quartet_vsq',
             'Guest': 'Bumjun Ko @ko_bum_jun',
-            'Media Art': 'Joung Yunsu @j.eongyunsu',
+            'Media Art': 'Jeong Yunsu @j.eongyunsu',
             'MV': 'Chamsae Kim @kimchamsae',
             'Director': 'Hanna Jung @b_ingbing',
             'Sound': 'Sangyong Min',
@@ -368,7 +368,7 @@ const WORKS = [
         video: 'https://youtu.be/97DiyvIzy1A',
         descEn: "<b>&lt;Exhibition&gt;</b><br/>2017.06.23 - 2017.06.25 | Gwacheon National Science Museum<br/>2018.05.18 - 2018.05.22 | Young Creative Korea 2018<br/>2018.03.03 - 2018.06.03 | Art-236 Place Camp Jeju<br/>2018.10.27 | 0 Handong (SK Telecom) Coex artium",
         credits: {
-            'Producer & Director': 'Joung Yunsu',
+            'Producer & Director': 'Jeong Yunsu',
             'Interaction & Programmer': 'Song Hayun',
             'Programmer': 'Park Munsok',
             'Video Artist': 'Kim Junhak',
@@ -386,7 +386,7 @@ const WORKS = [
 
 const CV_DATA = {
     profile: {
-        name: 'JOUNG YUNSU',
+        name: 'JEONG YUNSU',
         email: 'hello@jeongyunsu.com',
         site: 'jeongyunsu.com',
         location: 'Seoul, South Korea'
