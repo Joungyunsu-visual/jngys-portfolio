@@ -387,7 +387,7 @@ const WORKS = [
 const CV_DATA = {
     profile: {
         name: 'JEONG YUNSU',
-        email: 'hello@jeongyunsu.com',
+        email: 'jngys.works@gmail.com',
         site: 'jeongyunsu.com',
         location: 'Seoul, South Korea'
     },

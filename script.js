@@ -313,29 +313,7 @@ document.addEventListener('DOMContentLoaded', () => {
         blurReveal(heroDesc, heroDesc.getAttribute(`data-${currentLang}`));
     }
 
-    // Logo click listener
-    if (logo) {
-        logo.addEventListener('click', (e) => {
-            const isHome = window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/');
-            if (isHome) {
-                e.preventDefault();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                
-                // Desktop: explicitly switch to WORK
-                if (splitSection) {
-                    splitSection.classList.remove('expand-right');
-                    splitSection.classList.add('expand-left');
-                }
-                
-                // Mobile: click WORK tab
-                const workTabBtn = document.querySelector('.mobile-tab[data-target="work"]');
-                if (workTabBtn) {
-                    workTabBtn.click();
-                }
-            }
-            // else: naturally navigate to href="index.html"
-        });
-    }
+    // Logo naturally navigates to the intro page (index.html)
 
     // Initial render: WORK, PROJECT elements
     buildCards();
