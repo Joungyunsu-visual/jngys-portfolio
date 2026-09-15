@@ -236,8 +236,20 @@
                 display: none;
             }
 
+            /* clear full-width button, so "close" is easy to find after expanding */
             .ab-toggle {
-                display: inline-block;
+                display: block;
+                width: 100%;
+                margin-top: 20px;
+                padding: 12px 0;
+                border: 1px solid rgba(0, 0, 0, 0.18);
+                border-radius: 2px;
+                text-align: center;
+                white-space: pre;
+            }
+
+            .ab-toggle[aria-expanded="true"] {
+                background: rgba(0, 0, 0, 0.04);
             }
 
             /* CV preview: first lines only, fading out */
@@ -542,7 +554,7 @@
                 <p>In the brand and public sectors, Jeong has produced media art projects with Patek Philippe, The Hyundai Seoul, Samsung SDI, Hyundai Mobis, Sulwhasoo, and Kolon, and contributed media art to the film 〈Interview〉.</p>
                 </div>
             </div>
-            <button type="button" class="ab-toggle" data-target=".ab-bio .ab-more" data-more="더보기 · Read more" data-less="접기 · Close" aria-expanded="false">더보기 · Read more</button>
+            <button type="button" class="ab-toggle" data-target=".ab-bio .ab-more" data-more="더보기 · Read more  ↓" data-less="접기 · Close  ↑" aria-expanded="false">더보기 · Read more  ↓</button>
         </div>
     </section>
     <!-- Selected exhibitions -->
@@ -794,7 +806,7 @@
             </div>
 
         </div>
-        <button type="button" class="ab-toggle" data-collapse="#cv-list" data-more="전체 이력 보기 · Full CV" data-less="접기 · Close" aria-expanded="false">전체 이력 보기 · Full CV</button>
+        <button type="button" class="ab-toggle" data-collapse="#cv-list" data-more="전체 이력 보기 · Full CV  ↓" data-less="접기 · Close  ↑" aria-expanded="false">전체 이력 보기 · Full CV  ↓</button>
         </div>
     </section>
 
@@ -812,6 +824,8 @@
                 if (btn.dataset.collapse) document.querySelector(btn.dataset.collapse).classList.toggle('is-collapsed', !open);
                 btn.setAttribute('aria-expanded', String(open));
                 btn.textContent = open ? btn.dataset.less : btn.dataset.more;
+                // after closing, bring the section back into view instead of leaving the reader far below
+                if (!open) btn.closest('section').scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
         });
     </script>
