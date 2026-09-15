@@ -19,11 +19,15 @@
            text left (vertically centered), 4:5 image right */
         /* Fixed sizes as on creatorlink: 1140px centered block,
            526px text column + 570x712 image */
+        /* 1.4× the original creatorlink sizes (text 526 / image 570 / gap 44px → 736 / 798 / 62px,
+           block 1596px). --w is the block width: it shrinks with the window width AND height,
+           so the proportions stay identical and the 4:5 image always fits on screen. */
         .intro {
+            --w: min(90vw, 1596px, calc((100vh - 160px) * 1.6));
             min-height: 100vh;
             display: grid;
-            grid-template-columns: minmax(0, 526px) minmax(0, 570px);
-            column-gap: 44px;
+            grid-template-columns: calc(var(--w) * 0.4612) calc(var(--w) * 0.5);
+            column-gap: calc(var(--w) * 0.0388);
             justify-content: center;
             align-items: center;
             padding: 80px var(--padding) 40px;
@@ -32,7 +36,8 @@
 
         .intro-text {
             font-family: var(--font);
-            font-size: 17px;
+            /* 17px × 1.4 = 23.8px at full block width, scaled with the block */
+            font-size: max(14px, calc(var(--w) * 0.0149));
             line-height: 1.6;
             color: #777777;
             margin: 0;

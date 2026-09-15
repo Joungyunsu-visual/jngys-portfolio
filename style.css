@@ -92,7 +92,7 @@ ul {
 }
 
 .nav-link {
-    font-size: 0.85rem;
+    font-size: 1rem;
     font-weight: 400;
     letter-spacing: 0.05em;
     color: var(--text-color);
@@ -786,20 +786,22 @@ ul {
     background: none;
     border: none;
     cursor: pointer;
-    width: 30px;
-    height: 18px;
+    width: 26px;
+    height: 14px;
+    padding: 0;
     position: relative;
     z-index: 200;
 }
 
+/* whole-pixel sizes and offsets only, so both lines render with identical thickness */
 .hamburger span {
     display: block;
-    width: 100%;
-    height: 2.5px;
-    background: var(--text-color);
+    width: 26px;
+    height: 2px;
+    background: #3a3a3a;
     position: absolute;
     left: 0;
-    transition: transform 0.35s ease, opacity 0.35s ease;
+    transition: transform 0.35s ease, top 0.35s ease;
 }
 
 .hamburger span:first-child {
@@ -807,17 +809,17 @@ ul {
 }
 
 .hamburger span:last-child {
-    bottom: 2px;
+    top: 10px;
 }
 
 .hamburger.open span:first-child {
-    top: 50%;
-    transform: translateY(-50%) rotate(45deg);
+    top: 6px;
+    transform: rotate(45deg);
 }
 
 .hamburger.open span:last-child {
-    bottom: 50%;
-    transform: translateY(50%) rotate(-45deg);
+    top: 6px;
+    transform: rotate(-45deg);
 }
 
 /* =============================================
@@ -829,7 +831,8 @@ ul {
     top: 0;
     left: 0;
     right: 0;
-    z-index: 150;
+    /* below #nav (z-index 100) so the menu button stays visible and can close the menu */
+    z-index: 99;
     background: var(--bg-base);
     padding: 80px var(--padding) 32px;
     flex-direction: column;
@@ -923,8 +926,15 @@ ul {
         top: 0;
         left: 0;
         right: 0;
-        padding: 14px var(--padding);
+        /* fixed whole-pixel height so the menu icon lines land on exact pixels */
+        height: 56px;
+        box-sizing: border-box;
+        padding: 0 var(--padding);
         background: var(--bg-base);
+    }
+
+    .nav-logo {
+        font-size: 1.15rem;
     }
 
     .nav-links {
@@ -942,7 +952,7 @@ ul {
     /* Mobile tab bar — directly below nav */
     .mobile-tab-bar {
         display: flex;
-        top: 52px;
+        top: 56px;
     }
 
     /* Split section → stacked full-width, scrollable */

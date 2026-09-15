@@ -25,6 +25,11 @@
             align-content: start;
         }
 
+        /* #contact in style.css sets side padding to 0 — restore it */
+        #contact.ct {
+            padding: 120px var(--padding) 80px;
+        }
+
         .ct-image {
             grid-column: 1 / -1;
             margin: 0 0 48px;
@@ -90,7 +95,15 @@
                 grid-template-columns: 1fr;
                 row-gap: 20px;
                 align-content: start;
-                padding-top: 100px;
+            }
+
+            #contact.ct {
+                padding-top: 80px;
+            }
+
+            /* image runs edge to edge on phones; text keeps the side margin */
+            .ct-image {
+                margin: 0 calc(-1 * var(--padding)) 16px;
             }
 
             .ct-list div {
