@@ -30,7 +30,7 @@
     --orb-3: #e8ebf0;
     /* sky-50 */
 
-    --bg-base: #e6e8eb;
+    --bg-base: #f3f4f5;
     /* 사진 톤과 매칭되는 차분한 쿨 그레이 계열 */
     --font: 'Inter', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
     --padding: clamp(24px, 4vw, 60px);
@@ -238,34 +238,31 @@ ul {
     margin-bottom: 32px;
 }
 
-/* Default JS expanded state assumes left is expanded initially */
-.pane-left .works-grid-inner {
-    columns: 2;
+/* Row-first masonry: a CSS grid whose items span rows by their height
+   (set in script.js), so order reads left→right, then down */
+.works-grid-inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-auto-rows: 4px;
     column-gap: 16px;
+    align-items: start;
 }
 
-.pane-right .works-grid-inner {
-    columns: 1;
+.work-card {
+    margin-bottom: 0;
 }
 
-/* When Javascript adds .expand-right to .split-section */
-.split-section.expand-right .pane-left .works-grid-inner {
-    columns: 1;
-}
+.pane-left .works-grid-inner,
+.split-section.expand-left .pane-left .works-grid-inner,
 .split-section.expand-right .pane-right .works-grid-inner {
-    columns: 2;
-    column-gap: 16px;
+    grid-template-columns: 1fr 1fr;
 }
 
-/* Explicit left expansion */
-.split-section.expand-left .pane-left .works-grid-inner {
-    columns: 2;
-    column-gap: 16px;
-}
+.pane-right .works-grid-inner,
+.split-section.expand-right .pane-left .works-grid-inner,
 .split-section.expand-left .pane-right .works-grid-inner {
-    columns: 1;
+    grid-template-columns: 1fr;
 }
-
 .work-card:hover {
     transform: translateY(-4px);
 }
@@ -422,22 +419,18 @@ ul {
 }
 
 /* =============================================
-   WORK MODAL
+   WORK DETAIL — popup window
+   title → hero → image | text → justified image rows → info → more
    ============================================= */
 .work-modal {
     display: none;
     position: fixed;
     z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
+    inset: 0;
     overflow-y: auto;
-    background-color: rgba(255, 255, 255, 0.4);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    background: rgba(20, 20, 20, 0.55);
     opacity: 0;
-    transition: opacity 0.4s ease;
+    transition: opacity 0.35s ease;
 }
 
 .work-modal.show {
@@ -446,17 +439,15 @@ ul {
 }
 
 .work-modal-content {
-    background-color: var(--bg-base);
-    margin: 5% auto;
-    padding: clamp(24px, 4vw, 40px);
-    border: 1px solid var(--glass-border);
-    width: 90%;
-    max-width: 1400px;
-    border-radius: 8px;
-    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.1);
     position: relative;
-    transform: translateY(20px);
-    transition: transform 0.4s ease;
+    width: min(92vw, 1320px);
+    margin: 5vh auto;
+    padding: clamp(28px, 4vw, 56px);
+    box-sizing: border-box;
+    background: #fff;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.12);
+    transform: translateY(16px);
+    transition: transform 0.35s ease;
 }
 
 .work-modal.show .work-modal-content {
@@ -466,122 +457,268 @@ ul {
 .modal-close-wrapper {
     position: sticky;
     top: 0;
-    width: 100%;
     height: 0;
     z-index: 1100;
-    pointer-events: none; /* Let clicks pass through empty space */
+    pointer-events: none;
 }
 
 .close-modal {
-    color: var(--text-color);
     position: absolute;
-    top: 24px;
-    right: 32px;
-    font-size: 40px;
+    top: 16px;
+    right: 24px;
+    font-size: 36px;
     font-weight: 300;
-    cursor: pointer;
-    transition: color 0.3s;
     line-height: 1;
-    pointer-events: auto; /* Re-enable clicks on the button */
+    color: #fff;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    pointer-events: auto;
+    transition: opacity 0.3s;
 }
 
 .close-modal:hover {
-    color: var(--text-color);
+    opacity: 0.6;
 }
 
-.modal-main-img {
-    width: 100%;
-    max-height: 60vh;
-    object-fit: contain;
-    background: var(--glass-bg);
-    border-radius: 0;
-    margin-bottom: 24px;
-    cursor: pointer;
-    transition: transform 0.3s ease;
+.wd-head {
+    text-align: center;
+    padding: 8px 0 32px;
 }
 
-.modal-main-img:hover {
-    transform: scale(1.02);
-}
-
-.modal-title {
-    font-size: 1.5rem;
-    font-weight: 400;
-    margin-bottom: 8px;
-    color: var(--text-color);
-}
-
-.modal-year {
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    margin-bottom: 24px;
-}
-
-.modal-desc {
-    font-size: 0.95rem;
-    font-weight: 300;
-    line-height: 1.6;
-    color: var(--text-color);
-    margin-bottom: 24px;
-}
-
-.modal-credits {
-    margin-bottom: 32px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.credit-item {
-    font-size: 0.85rem;
-    font-weight: 300;
-}
-
-.credit-role {
+.wd-title {
+    font-size: 1.15rem;
     font-weight: 500;
+    color: var(--text-color);
+    margin: 0 0 10px;
+}
+
+.wd-meta p {
+    font-size: 0.8rem;
+    line-height: 1.6;
     color: var(--text-muted);
-    margin-right: 8px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    font-size: 0.75rem;
+    margin: 0;
 }
 
-.modal-extra-images {
+.wd-hero {
+    margin-bottom: 18px;
+}
+
+.wd-hero-media {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: #000;
+}
+
+.wd-video {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    background: #000;
+}
+
+.wd-video iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.wd-zoom {
+    cursor: zoom-in;
+}
+
+/* Image | text (first image beside the description) */
+.wd-split {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-    margin-top: 24px;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-bottom: 18px;
 }
 
-.modal-extra-img {
+/* image beside the text is shown whole (never cropped); the text may leave white space */
+.wd-split {
+    align-items: start;
+}
+
+.wd-split figure {
+    margin: 0;
+}
+
+.wd-split figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.wd-split-text {
+    grid-template-columns: 1fr;
+}
+
+.wd-copy {
+    align-self: center;
+    padding: 8px 0;
+}
+
+.wd-ko p {
+    font-family: 'Noto Sans KR', var(--font);
+    font-size: 0.85rem;
+    line-height: 1.85;
+    color: #333;
+    word-break: keep-all;
+    margin: 0 0 12px;
+}
+
+.wd-en {
+    margin-top: 18px;
+}
+
+.wd-en p {
+    font-size: 0.8rem;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--text-muted);
+    margin: 0 0 10px;
+}
+
+/* Justified rows: every row fills the width, pairs share one height */
+.wd-imgrow {
+    display: flex;
+    gap: 18px;
+    margin-bottom: 18px;
+}
+
+.wd-imgrow figure {
+    margin: 0;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.wd-imgrow img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.wd-imgrow-solo figure {
+    width: 60%;
+    margin: 0 auto;
+}
+
+/* Info + credits */
+.wd-info {
+    margin: 40px 0 0;
+    padding-top: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.wd-info div {
+    display: grid;
+    grid-template-columns: minmax(120px, 200px) minmax(0, 1fr);
+    column-gap: 16px;
+    padding: 2px 0;
+}
+
+.wd-info dt,
+.wd-info dd {
+    margin: 0;
+    font-size: 0.8rem;
+    line-height: 1.7;
+}
+
+.wd-info dt {
+    color: var(--text-muted);
+}
+
+.wd-info dd {
+    color: var(--text-color);
+}
+
+/* More */
+.wd-more {
+    margin-top: 48px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.wd-more h2 {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-color);
+    margin: 0 0 14px;
+}
+
+.wd-more-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.wd-more-item {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-color);
+}
+
+.wd-more-item img {
+    display: block;
     width: 100%;
     aspect-ratio: 4 / 3;
     object-fit: cover;
-    border-radius: 0;
-    background: var(--glass-bg);
+    margin-bottom: 6px;
+    transition: opacity 0.3s;
 }
 
-.modal-masonry {
-    column-count: 2;
-    column-gap: 16px;
-    margin-top: 24px;
+.wd-more-item:hover img {
+    opacity: 0.8;
 }
 
-.masonry-item {
-    width: 100%;
-    margin-bottom: 16px;
-    display: block;
-    break-inside: avoid-column;
-    border-radius: 0;
-    background: var(--glass-bg);
-    height: auto;
-    object-fit: contain;
-    cursor: pointer;
-    transition: transform 0.3s ease;
+.wd-more-year {
+    margin-left: 6px;
+    color: var(--text-muted);
 }
 
-.masonry-item:hover {
-    transform: scale(1.02);
+@media (max-width: 768px) {
+    .work-modal-content {
+        width: 100%;
+        margin: 0;
+        min-height: 100%;
+        padding: 56px 16px 32px;
+        box-shadow: none;
+    }
+
+    .close-modal {
+        color: var(--text-color);
+        text-shadow: none;
+    }
+
+    .wd-split {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .wd-imgrow {
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+
+    .wd-hero,
+    .wd-split {
+        margin-bottom: 10px;
+    }
+
+    .wd-imgrow-solo figure {
+        width: 100%;
+    }
+
+    .wd-info div {
+        grid-template-columns: 110px minmax(0, 1fr);
+    }
+
+    .wd-more-grid {
+        grid-template-columns: 1fr 1fr;
+    }
 }
 
 /* =============================================
@@ -858,7 +995,7 @@ ul {
     .split-section.expand-left .pane-right .works-grid-inner,
     .split-section.expand-right .pane-left .works-grid-inner,
     .split-section.expand-right .pane-right .works-grid-inner {
-        columns: 1;
+        grid-template-columns: 1fr;
     }
 
     /* General responsive */
@@ -896,49 +1033,6 @@ ul {
         color: #000;
         background: none;
         backdrop-filter: none;
-    }
-}
-
-/* =============================================
-   MODAL IMAGE FLOW (ALL LARGE + PORTRAIT PAIRS)
-   ============================================= */
-.modal-image-flow {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 24px;
-    margin-top: 24px;
-}
-
-.flow-item {
-    background: var(--glass-bg);
-    border-radius: 0;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-    object-fit: contain;
-    width: 100%;
-    max-height: 80vh;
-}
-
-.flow-item.landscape {
-    width: 100%;
-}
-
-.flow-item.portrait {
-    width: calc(50% - 12px);
-}
-
-.work-modal[data-slug="the-murderers-report-movie"] .modal-image-flow img:first-of-type.portrait,
-.work-modal[data-slug="villa-somme-ulleungdo"] .modal-image-flow img:first-of-type.portrait {
-    width: 100%;
-}
-
-.flow-item:hover {
-    transform: scale(1.02);
-}
-
-@media (max-width: 768px) {
-    .flow-item.portrait {
-        width: 100%;
     }
 }
 

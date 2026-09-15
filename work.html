@@ -27,9 +27,8 @@
         <div class="nav-links">
             <a href="work.html" class="nav-link" data-en="Work" data-ko="작업">Work</a>
             <a href="about.html" class="nav-link" data-en="About" data-ko="소개">About</a>
-            <a href="about.html#contact" class="nav-link" data-en="Contact" data-ko="연락처">Contact</a>
+            <a href="contact.html" class="nav-link" data-en="Contact" data-ko="연락처">Contact</a>
             <a href="https://www.instagram.com/jeongyunsu___/" target="_blank" class="nav-link">Instagram</a>
-            <button id="lang-toggle" class="lang-toggle" aria-label="Toggle language">KR</button>
         </div>
         <button id="hamburger" class="hamburger" aria-label="Open menu">
             <span></span><span></span>
@@ -40,27 +39,26 @@
     <div id="mobile-nav" class="mobile-nav">
         <a href="work.html" class="mobile-nav-link" data-en="Work" data-ko="작업">Work</a>
         <a href="about.html" class="mobile-nav-link" data-en="About" data-ko="소개">About</a>
-        <a href="about.html#contact" class="mobile-nav-link" data-en="Contact" data-ko="연락처">Contact</a>
+        <a href="contact.html" class="mobile-nav-link" data-en="Contact" data-ko="연락처">Contact</a>
         <a href="https://www.instagram.com/jeongyunsu___/" target="_blank" class="mobile-nav-link">Instagram</a>
-        <button id="lang-toggle-mobile" class="lang-toggle" aria-label="Toggle language">KR</button>
     </div>
 
     <!-- Mobile Tab Bar -->
     <div class="mobile-tab-bar" id="mobile-tab-bar">
-        <button class="mobile-tab active" data-target="project" data-en="PROJECT" data-ko="프로젝트">PROJECT</button>
-        <button class="mobile-tab" data-target="work" data-en="WORK" data-ko="작업">WORK</button>
+        <button class="mobile-tab active" data-target="work" data-en="WORK" data-ko="작업">WORK</button>
+        <button class="mobile-tab" data-target="project" data-en="PROJECT" data-ko="프로젝트">PROJECT</button>
     </div>
 
     <!-- Works Section -->
     <section id="works" class="split-section">
-        <!-- Project Pane -->
-        <div class="split-pane pane-left" id="pane-project">
+        <!-- Work Pane (left) -->
+        <div class="split-pane pane-left" id="pane-work">
             <div class="pane-header">
-                <h2 data-en="PROJECT" data-ko="프로젝트">PROJECT</h2>
+                <h2 data-en="WORK" data-ko="작업">WORK</h2>
             </div>
-            <div class="pane-scroll" id="scroll-project">
-                <div class="works-grid-inner" id="grid-project">
-                    <!-- JS renders Project items here -->
+            <div class="pane-scroll" id="scroll-work">
+                <div class="works-grid-inner" id="grid-work">
+                    <!-- JS renders Work items here -->
                 </div>
                 <!-- Footer -->
                 <footer class="pane-footer">
@@ -68,13 +66,14 @@
                 </footer>
             </div>
         </div>
-        <div class="split-pane pane-right" id="pane-work">
+        <!-- Project Pane (right) -->
+        <div class="split-pane pane-right" id="pane-project">
             <div class="pane-header">
-                <h2 data-en="WORK" data-ko="작업">WORK</h2>
+                <h2 data-en="PROJECT" data-ko="프로젝트">PROJECT</h2>
             </div>
-            <div class="pane-scroll" id="scroll-work">
-                <div class="works-grid-inner" id="grid-work">
-                    <!-- JS renders Work items here -->
+            <div class="pane-scroll" id="scroll-project">
+                <div class="works-grid-inner" id="grid-project">
+                    <!-- JS renders Project items here -->
                 </div>
                 <!-- Footer -->
                 <footer class="pane-footer">

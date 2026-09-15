@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <title>Contact - Jeong Yunsu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Contact — same label | content grid as the About rows, vertically centered */
+        .ct {
+            min-height: 100vh;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 120px var(--padding) 80px;
+            box-sizing: border-box;
+            display: grid;
+            grid-template-columns: minmax(160px, 1fr) minmax(0, 3fr);
+            column-gap: clamp(24px, 4vw, 72px);
+            align-content: start;
+        }
+
+        .ct-image {
+            grid-column: 1 / -1;
+            margin: 0 0 48px;
+        }
+
+        .ct-image img {
+            display: block;
+            width: 100%;
+            max-height: 70vh;
+            object-fit: cover;
+        }
+
+        .ct-label {
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            line-height: 1.6;
+            color: var(--text-color);
+            margin: 0;
+        }
+
+        .ct-label span {
+            display: block;
+            font-family: 'Noto Sans KR', var(--font);
+            font-weight: 400;
+            letter-spacing: 0;
+            color: var(--text-muted);
+        }
+
+        .ct-list {
+            margin: 0;
+        }
+
+        .ct-list div {
+            display: grid;
+            grid-template-columns: 110px minmax(0, 1fr);
+            column-gap: 16px;
+            padding: 4px 0;
+        }
+
+        .ct-list dt,
+        .ct-list dd {
+            margin: 0;
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        .ct-list dt {
+            color: var(--text-muted);
+        }
+
+        .ct-list a {
+            color: var(--text-color);
+            transition: opacity 0.3s;
+        }
+
+        .ct-list a:hover {
+            opacity: 0.5;
+        }
+
+        @media (max-width: 768px) {
+            .ct {
+                grid-template-columns: 1fr;
+                row-gap: 20px;
+                align-content: start;
+                padding-top: 100px;
+            }
+
+            .ct-list div {
+                grid-template-columns: 90px minmax(0, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav id="nav">
+        <a href="index.html" class="nav-logo">JEONGYUNSU</a>
+        <div class="nav-links">
+            <a href="work.html" class="nav-link">Work</a>
+            <a href="about.html" class="nav-link">About</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+            <a href="https://www.instagram.com/jeongyunsu___/" target="_blank" class="nav-link">Instagram</a>
+        </div>
+        <button id="hamburger" class="hamburger" aria-label="Open menu">
+            <span></span><span></span>
+        </button>
+    </nav>
+
+    <!-- Mobile Nav Dropdown -->
+    <div id="mobile-nav" class="mobile-nav">
+        <a href="work.html" class="mobile-nav-link">Work</a>
+        <a href="about.html" class="mobile-nav-link">About</a>
+        <a href="contact.html" class="mobile-nav-link">Contact</a>
+        <a href="https://www.instagram.com/jeongyunsu___/" target="_blank" class="mobile-nav-link">Instagram</a>
+    </div>
+
+    <main id="contact" class="ct">
+        <figure class="ct-image">
+            <img src="https://res.cloudinary.com/dbgr7vngr/image/upload/w_2000,q_auto,f_auto/v1773813578/Visang_Abstraction_4__%EA%B2%B0%EA%B3%BC_n100nl.webp"
+                alt="Abstraction — Jeong Yunsu">
+        </figure>
+        <h1 class="ct-label">Contact<span lang="ko">연락처</span></h1>
+        <dl class="ct-list">
+            <div>
+                <dt>Email</dt>
+                <dd><a href="mailto:jngys.works@gmail.com" id="contact-email">jngys.works@gmail.com</a></dd>
+            </div>
+            <div>
+                <dt>Phone</dt>
+                <dd><a href="tel:+821055030076" id="contact-phone">+82 10 5503 0076</a></dd>
+            </div>
+            <div>
+                <dt>Instagram</dt>
+                <dd><a href="https://www.instagram.com/jeongyunsu___/" target="_blank" id="contact-instagram">@jeongyunsu___</a></dd>
+            </div>
+            <div>
+                <dt>Based in</dt>
+                <dd>Seoul, South Korea</dd>
+            </div>
+        </dl>
+    </main>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const mobileNav = document.getElementById('mobile-nav');
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('open');
+            mobileNav.classList.toggle('show');
+        });
+    </script>
+</body>
+
+</html>

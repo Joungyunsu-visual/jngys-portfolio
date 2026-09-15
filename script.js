@@ -47,8 +47,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ─── Split pane persistent hover ──────────────────────────────────────
     const splitSection = document.querySelector('.split-section');
-    const paneLeft = document.getElementById('pane-project');
-    const paneRight = document.getElementById('pane-work');
+    const paneLeft = document.getElementById('pane-work');
+    const paneRight = document.getElementById('pane-project');
 
     if (splitSection && paneLeft && paneRight) {
         splitSection.classList.add('expand-left');
@@ -110,124 +110,147 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ─── Core Logic ─────────────────────────────────────────────────────
 
-    // Build modal content from a work data object
-    function showWorkModal(work) {
+    // Build the detail popup: title → hero → text beside first image → justified image rows → more
+    const paragraphs = (v) => (Array.isArray(v) ? v : v ? [v] : []).map(t => `<p>${t}</p>`).join('');
+    const loadImage = (src) => new Promise(res => {
+        const im = new Image();
+        im.onload = () => res({ src, ratio: im.naturalWidth / im.naturalHeight });
+        im.onerror = () => res({ src, ratio: 1.5 });
+        im.src = src;
+    });
+    // Clamp ratios so paired images are cropped a little instead of leaving gaps
+    const clampRatio = (r) => Math.min(Math.max(r, 0.7), 1.6);
+
+    // Group images into rows of 1 (landscape) or 2 (pairs). A portrait never stands alone:
+    // it pairs with the next image, or with the previous single image if it is last.
+    function buildRows(items) {
+        const rows = [];
+        for (let i = 0; i < items.length; i++) {
+            const cur = items[i];
+            const next = items[i + 1];
+            if (cur.ratio < 1 && next) {
+                rows.push([cur, next]);
+                i++;
+            } else if (cur.ratio < 1) {
+                const prev = rows[rows.length - 1];
+                if (prev && prev.length === 1) prev.push(cur);
+                else rows.push([cur]);
+            } else if (next && next.ratio < 1 && !items[i + 2]) {
+                rows.push([cur, next]);
+                i++;
+            } else {
+                rows.push([cur]);
+            }
+        }
+        return rows;
+    }
+
+    const rowHTML = (row, title) => {
+        if (row.length === 1 && row[0].ratio < 1) {
+            // lone portrait (only image): centered, not full width
+            return `<div class="wd-imgrow wd-imgrow-solo"><figure style="aspect-ratio:${row[0].ratio}"><img src="${row[0].src}" alt="${title}" class="wd-zoom"></figure></div>`;
+        }
+        const figs = row.map(it => {
+            const r = row.length === 1 ? it.ratio : clampRatio(it.ratio);
+            return `<figure style="flex:${r} 1 0; aspect-ratio:${r}"><img src="${it.src}" alt="${title}" class="wd-zoom"></figure>`;
+        }).join('');
+        return `<div class="wd-imgrow">${figs}</div>`;
+    };
+
+    async function showWorkModal(work) {
         if (!modal || !modalBody) return;
         modal.setAttribute('data-slug', work.slug || '');
-
-        const mainImgSrc = work.main ? cl(work.main, 'full') : '';
         const title = work.title;
-        const year = work.year || '';
-        const genre = work.genre || '';
-        const descKo = work.descKo || '';
-        const descEn = work.descEn || '';
-        const desc = work.desc || '';
-        const credits = work.credits || null;
+
+        let hero = '';
         const videoSrc = work.video || '';
-        const extraImages = work.images ? work.images.map(u => cl(u, 'full')) : [];
-
-        let contentHTML = ``;
-
-        if (videoSrc) {
-            if (videoSrc.includes('youtube.com') || videoSrc.includes('youtu.be')) {
-                let ytId = '';
-                if (videoSrc.includes('youtu.be/')) {
-                    ytId = videoSrc.split('youtu.be/')[1].split('?')[0];
-                } else if (videoSrc.includes('youtube.com/watch')) {
-                    ytId = new URL(videoSrc).searchParams.get('v');
-                }
-                if (ytId) {
-                    contentHTML += `<div style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden; margin-bottom:24px;">
-                        <iframe src="https://www.youtube.com/embed/${ytId}" style="position:absolute; top:0; left:0; width:100%; height:100%; border:0;" allowfullscreen></iframe>
-                    </div>`;
-                }
-            } else {
-                contentHTML += `<video src="${videoSrc}" class="modal-main-img" controls playsinline style="background:#000;"></video>`;
-            }
-        } else if (mainImgSrc) {
-            contentHTML += `<img src="${mainImgSrc}" alt="${title}" class="modal-main-img">`;
+        if (videoSrc && (videoSrc.includes('youtube.com') || videoSrc.includes('youtu.be'))) {
+            let ytId = '';
+            if (videoSrc.includes('youtu.be/')) ytId = videoSrc.split('youtu.be/')[1].split('?')[0];
+            else ytId = new URL(videoSrc).searchParams.get('v');
+            if (ytId) hero = `<div class="wd-video"><iframe src="https://www.youtube.com/embed/${ytId}" allowfullscreen></iframe></div>`;
+        } else if (videoSrc) {
+            hero = `<video src="${videoSrc}" class="wd-hero-media" controls playsinline></video>`;
+        } else if (work.main) {
+            hero = `<img src="${cl(work.main, 'full')}" alt="${title}" class="wd-hero-media wd-zoom">`;
         }
 
-        // Text section right below main image
-        contentHTML += `<div class="modal-text-wrap" style="margin-bottom: 40px; padding: 0 16px;">`;
-        contentHTML += `
-            <div class="modal-header" style="text-align:center; margin-bottom:12px;">`;
-            
-        if (genre) {
-            contentHTML += `<div class="modal-genre" style="display:inline-block; border:1px solid currentColor; padding:6px 16px; font-size:12px; letter-spacing:1px; margin-bottom:20px; text-transform:uppercase;">${genre}</div>`;
-        }
-            
-        contentHTML += `
-                <h3 class="modal-title" style="margin-bottom:4px;">${title}</h3>
-                <p class="modal-year" style="margin-bottom:0;">${year}</p>
-            </div>
-        `;
+        const meta = [work.year, work.genre ? work.genre.split('/').map(g => g.trim()).join(' · ') : '']
+            .filter(Boolean).map(m => `<p>${m}</p>`).join('');
 
-        if (credits) {
-            contentHTML += `<div class="modal-credits" style="padding-bottom:24px;">`;
-            for (const [role, name] of Object.entries(credits)) {
-                contentHTML += `<div class="credit-item" style="display:flex; justify-content:center; margin-bottom:8px;">
-                    <span class="credit-role" style="min-width:140px; text-align:right; margin-right:16px;">${role}</span>
-                    <span style="min-width:140px; text-align:left;">${name}</span>
-                </div>`;
-            }
-            contentHTML += `</div>`;
-        }
+        const rows = [...(work.info || [])];
+        if (work.credits) Object.entries(work.credits).forEach(([role, name]) => rows.push([role, name]));
+        const infoHTML = rows.length
+            ? `<dl class="wd-info">${rows.map(([l, v]) => `<div><dt>${l}</dt><dd>${v}</dd></div>`).join('')}</dl>`
+            : '';
 
-        if (desc) contentHTML += `<div class="modal-desc" style="text-align:center; margin-bottom:24px;">${desc}</div>`;
-        
-        contentHTML += `</div>`;
+        const hasText = work.descKo || work.descEn;
+        const textHTML = hasText
+            ? `<div class="wd-copy">
+                   ${work.descKo ? `<div class="wd-ko" lang="ko">${paragraphs(work.descKo)}</div>` : ''}
+                   ${work.descEn ? `<div class="wd-en" lang="en">${paragraphs(work.descEn)}</div>` : ''}
+               </div>`
+            : '';
 
-        if (extraImages.length > 0) {
-            contentHTML += `<div class="modal-image-flow">`;
-            extraImages.forEach((src, index) => {
-                contentHTML += `<img src="${src}" class="flow-item" alt="Extra Image" loading="lazy">`;
-                
-                // Show Korean description after the FIRST extra image
-                if (index === 0 && descKo) {
-                    contentHTML += `<div class="modal-desc" style="text-align:center; margin:40px 16px;">${descKo}</div>`;
-                }
-                
-                // Show English description after the LAST extra image
-                if (index === extraImages.length - 1 && descEn) {
-                    contentHTML += `<div class="modal-desc" style="text-align:center; margin:40px 16px;">${descEn}</div>`;
-                }
-            });
-            contentHTML += `</div>`;
-        } else {
-            // Edge case: if there are no extra images but descriptions exist
-            if (descKo) contentHTML += `<div class="modal-desc" style="text-align:center; margin:40px 16px;">${descKo}</div>`;
-            if (descEn) contentHTML += `<div class="modal-desc" style="text-align:center; margin:40px 16px;">${descEn}</div>`;
-        }
+        const same = WORKS.filter(w => w.category === work.category);
+        const idx = same.findIndex(w => w.slug === work.slug);
+        const more = [1, 2, 3].map(n => same[(idx + n) % same.length]).filter(w => w && w.slug !== work.slug);
+        const moreHTML = more.length ? `
+            <section class="wd-more">
+                <h2>More ${work.category === 'project' ? 'projects' : 'works'}</h2>
+                <div class="wd-more-grid">
+                    ${more.map(w => `<a href="#work/${w.slug}" class="wd-more-item" data-slug="${w.slug}">
+                        <img src="${cl(w.main, 'thumb')}" alt="${w.title}" loading="lazy">
+                        <span>${w.title}</span><span class="wd-more-year">${w.year}</span>
+                    </a>`).join('')}
+                </div>
+            </section>` : '';
 
-        modalBody.innerHTML = contentHTML;
+        modalBody.innerHTML = `
+            <article class="wd">
+                <header class="wd-head">
+                    <h1 class="wd-title">${title}</h1>
+                    <div class="wd-meta">${meta}</div>
+                </header>
+                ${hero ? `<div class="wd-hero">${hero}</div>` : ''}
+                <div class="wd-body"></div>
+                ${infoHTML}
+                ${moreHTML}
+            </article>`;
+
         modal.classList.add('show');
         modal.scrollTop = 0;
         document.body.style.overflow = 'hidden';
 
-        const modalImages = modalBody.querySelectorAll('img');
-        modalImages.forEach(img => {
-            if (img.classList.contains('flow-item')) {
-                const checkRatio = () => {
-                    if (img.naturalHeight > img.naturalWidth) {
-                        img.classList.add('portrait');
-                    } else {
-                        img.classList.add('landscape');
-                    }
-                };
-                if (img.complete && img.naturalHeight) {
-                    checkRatio();
-                } else {
-                    img.addEventListener('load', checkRatio);
-                }
-            }
+        // Images need their ratios before rows can be built
+        const token = Symbol();
+        showWorkModal.token = token;
+        const items = await Promise.all((work.images || []).map(u => loadImage(cl(u, 'full'))));
+        if (showWorkModal.token !== token) return; // another work was opened meanwhile
 
-            img.addEventListener('click', () => {
-                if (openLightbox) openLightbox(img.src);
+        let bodyHTML = '';
+        let rest = items;
+        if (hasText && items.length) {
+            // creatorlink-style: first image on the left, text on the right
+            bodyHTML += `<div class="wd-split"><figure><img src="${items[0].src}" alt="${title}" class="wd-zoom"></figure>${textHTML}</div>`;
+            rest = items.slice(1);
+        } else if (hasText) {
+            bodyHTML += `<div class="wd-split wd-split-text">${textHTML}</div>`;
+        }
+        bodyHTML += buildRows(rest).map(r => rowHTML(r, title)).join('');
+        modalBody.querySelector('.wd-body').innerHTML = bodyHTML;
+
+        modalBody.querySelectorAll('.wd-zoom').forEach(img => {
+            img.addEventListener('click', () => { if (openLightbox) openLightbox(img.src); });
+        });
+        modalBody.querySelectorAll('.wd-more-item').forEach(a => {
+            a.addEventListener('click', (e) => {
+                e.preventDefault();
+                history.pushState(null, '', '#work/' + a.dataset.slug);
+                openModalBySlug(a.dataset.slug);
             });
         });
     }
-
     // Open modal by slug (for deep linking)
     function openModalBySlug(slug) {
         const work = WORKS.find(w => w.slug === slug);
@@ -244,7 +267,26 @@ document.addEventListener('DOMContentLoaded', () => {
         gridWork.innerHTML = '';
         gridProject.innerHTML = '';
 
-        WORKS.forEach(work => {
+        // Featured items first (in this order), the rest shuffled on every load
+        const FEATURED = {
+            project: ['the-murderers-report-movie', 'patek-philippe-brand-media-art', 'newmix-coffee', 'the-hyundai-ooh'],
+            work: ['atelier-nodeul-opening-exhibition', 'paradise-art-lab-festival', 'seoul-light-bitseom-festival',
+                'crystals', 'huracan', 'saic-audi-beyond-human-emotion-history'],
+        };
+        const shuffle = (arr) => {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        };
+        const ordered = ['project', 'work'].flatMap(cat => {
+            const items = WORKS.filter(w => w.category === cat);
+            const featured = FEATURED[cat].map(slug => items.find(w => w.slug === slug)).filter(Boolean);
+            return [...featured, ...shuffle(items.filter(w => !featured.includes(w)))];
+        });
+
+        ordered.forEach(work => {
             const card = document.createElement('a');
             card.className = 'work-card fade-in';
             card.href = '#';
@@ -277,6 +319,43 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         attachCardListeners();
+        setupMasonry([gridWork, gridProject]);
+    }
+
+    // Row-first masonry: each card spans grid rows (4px units) matching its height,
+    // so the grid keeps left→right reading order while columns stay packed.
+    function setupMasonry(grids) {
+        const layout = (grid) => {
+            const rowUnit = parseFloat(getComputedStyle(grid).gridAutoRows) || 4;
+            const gap = 32;
+            // clear pinned columns first: a card pinned to column 2 creates an implicit track,
+            // which would make a 1-column pane still report 2 columns
+            const cards = grid.querySelectorAll('.work-card');
+            cards.forEach(card => { card.style.gridColumn = ''; });
+            const cols = getComputedStyle(grid).gridTemplateColumns.split(' ').length;
+            grid.querySelectorAll('.work-card').forEach((card, i) => {
+                // pin columns so importance order alternates strictly left, right, left…
+                card.style.gridColumn = cols > 1 ? String((i % cols) + 1) : 'auto';
+                card.style.gridRowEnd = 'auto';
+                const h = card.getBoundingClientRect().height;
+                card.style.gridRowEnd = `span ${Math.ceil((h + gap) / rowUnit)}`;
+            });
+        };
+        grids.forEach(grid => {
+            if (!grid) return;
+            grid.querySelectorAll('img').forEach(img => {
+                if (!img.complete) img.addEventListener('load', () => layout(grid), { once: true });
+            });
+            // column count changes with the pane hover animation → relayout on width change
+            new ResizeObserver(() => layout(grid)).observe(grid);
+            layout(grid);
+        });
+        // the column template switches the moment expand-left/right changes
+        const split = document.querySelector('.split-section');
+        if (split) {
+            new MutationObserver(() => grids.forEach(g => g && layout(g)))
+                .observe(split, { attributes: true, attributeFilter: ['class'] });
+        }
     }
 
 
@@ -343,7 +422,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function setMobilePane(target) {
         if (!paneLeft || !paneRight) return;
-        if (target === 'project') {
+        if (target === 'work') {
             paneLeft.classList.add('mobile-visible');
             paneLeft.classList.remove('mobile-hidden');
             paneRight.classList.add('mobile-hidden');
@@ -358,7 +437,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize mobile state
     if (isMobile()) {
-        setMobilePane('project');
+        setMobilePane('work');
     }
 
     mobileTabs.forEach(tab => {
@@ -430,6 +509,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Lightbox Logic
     if (lightbox && lightboxImg) {
         const closeBtn = lightbox.querySelector('.close-lightbox');
+        openLightbox = (src) => {
+            lightboxImg.src = src;
+            lightbox.classList.add('show');
+        };
         closeLightboxFunc = () => {
             lightbox.classList.remove('show');
             setTimeout(() => {
