@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
     <title>About - Jeong Yunsu</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
@@ -59,6 +60,7 @@
         }
 
         .cv-date {
+            display: none; /* dates hidden for now; data kept in markup */
             flex: 0 0 120px;
             color: var(--text-muted);
             font-variant-numeric: tabular-nums;
@@ -86,9 +88,74 @@
             gap: 40px;
         }
 
+        /* About layout: photo | bio (KO + EN) | details */
+        #about .about-content {
+            grid-template-columns: minmax(240px, 420px) minmax(0, 680px) minmax(200px, 300px);
+            justify-content: start;
+            column-gap: clamp(48px, 5vw, 96px);
+        }
+
+        #about .about-image {
+            position: sticky;
+            top: 100px;
+        }
+
+        .about-bio .bio-ko p {
+            font-family: 'Noto Sans KR', var(--font);
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.95;
+            color: #444;
+            word-break: keep-all;
+            margin-bottom: 18px;
+        }
+
+        .about-bio .bio-en {
+            margin-top: 40px;
+            padding-top: 36px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .about-bio .bio-en p {
+            font-size: 0.9rem;
+            font-weight: 300;
+            line-height: 1.8;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        #about .about-details {
+            padding-top: 6px;
+        }
+
+        @media (max-width: 1100px) {
+            #about .about-content {
+                grid-template-columns: minmax(200px, 300px) minmax(0, 1fr);
+                gap: 48px;
+            }
+
+            #about .about-details {
+                grid-column: 2;
+            }
+        }
+
         @media (max-width: 768px) {
             body {
                 padding-top: 80px;
+            }
+
+            #about .about-content {
+                grid-template-columns: 1fr;
+                gap: 36px;
+            }
+
+            #about .about-image {
+                position: static;
+                max-width: 420px;
+            }
+
+            #about .about-details {
+                grid-column: auto;
             }
 
             .cv-wrapper {
@@ -143,7 +210,7 @@
             <a href="work.html" class="nav-link" data-en="Work" data-ko="작업">Work</a>
             <a href="about.html" class="nav-link" data-en="About" data-ko="소개">About</a>
             <a href="#contact" class="nav-link" data-en="Contact" data-ko="연락처">Contact</a>
-            <a href="https://instagram.com/j.eongyunsu" target="_blank" class="nav-link">Instagram</a>
+            <a href="https://www.instagram.com/jeongyunsu___/" target="_blank" class="nav-link">Instagram</a>
             <button id="lang-toggle" class="lang-toggle" aria-label="Toggle language">KR</button>
         </div>
         <button id="hamburger" class="hamburger" aria-label="Open menu">
@@ -156,7 +223,7 @@
         <a href="work.html" class="mobile-nav-link" data-en="Work" data-ko="작업">Work</a>
         <a href="about.html" class="mobile-nav-link" data-en="About" data-ko="소개">About</a>
         <a href="#contact" class="mobile-nav-link" data-en="Contact" data-ko="연락처">Contact</a>
-        <a href="https://instagram.com/j.eongyunsu" target="_blank" class="mobile-nav-link">Instagram</a>
+        <a href="https://www.instagram.com/jeongyunsu___/" target="_blank" class="mobile-nav-link">Instagram</a>
         <button id="lang-toggle-mobile" class="lang-toggle" aria-label="Toggle language">KR</button>
     </div>
 
@@ -168,17 +235,17 @@
                 <img src="https://res.cloudinary.com/dbgr7vngr/image/upload/v1773140546/jys_0290_v4sxk3.jpg"
                     alt="Jeong Yunsu Profile" loading="lazy">
             </div>
-            <div class="about-text">
-                <p data-en="Jeong Yunsu is a media artist based in Seoul, South Korea. Working at the intersection of digital technology and contemporary art, he creates immersive experiences through installation, performance, and audiovisual work."
-                    data-ko="정윤수는 대한민국 서울을 기반으로 활동하는 미디어 아티스트입니다. 디지털 기술과 현대 미술의 접점에서 설치, 퍼포먼스, 시청각 작업을 통해 몰입형 경험을 창조합니다.">
-                    Jeong Yunsu is a media artist based in Seoul, South Korea. Working at the intersection of digital
-                    technology and contemporary art, he creates immersive experiences through installation, performance,
-                    and audiovisual work.</p>
-                <p data-en="His practice explores the poetic potential of data, light, and sound transforming digital processes into sensory, human experiences."
-                    data-ko="그의 작업은 데이터, 빛, 소리의 시적인 잠재력을 탐구하며, 디지털 과정을 감각적이고 인간적인 경험으로 변환합니다.">His
-                    practice explores the
-                    poetic potential of data, light, and sound transforming digital processes
-                    into sensory, human experiences.</p>
+            <div class="about-text about-bio">
+                <div class="bio-ko" lang="ko">
+                    <p>정윤수는 알고리즘을 활용해 디지털 사회에서 감각의 확장성을 탐구하고 개발하는 미디어 아티스트다. 디지털 추상과 절차적 프로그래밍을 도구 삼아, 자연과 시스템이 지닌 복잡한 운동을 디지털상에서 심미적으로 재구성한다. 대형 LED 스크린과 프로젝션 맵핑을 캔버스로 사용하며, 화면 안에서 생성된 감각이 물리적 공간으로 전개되는 지점—확장된 감각이 현실과 맞닿는 합치점을 작업의 중심에 둔다.</p>
+                    <p>서울라이트 빛섬축제(2023)에 메인작가로 참여했고, 파라다이스 아트랩 페스티벌(2024), 아뜰리에 노들 개관전(2025), 디지털 노벰버 메타센싱(2025)에 이름을 올렸다. 천안시립미술관 미디어 특별전 printf("Human odyssey")(2022), 상하이 아우디 〈Beyond Human〉(2022)에 참여했으며, 무목적 갤러리에서 개인전 〈Crystals〉(2021)를 열었다. 아트센터 나비 창의인재 작가로 선정(2021)되었다.</p>
+                    <p>브랜드·공공 영역에서는 파텍필립, 더현대 서울, 삼성SDI, 현대모비스, 설화수, 코오롱과 미디어아트 프로젝트를 제작했고, 영화 〈인터뷰〉의 미디어아트 작업에 참여했다.</p>
+                </div>
+                <div class="bio-en" lang="en">
+                    <p>Jeong Yunsu is a media artist who explores and develops the expandability of the senses in digital society through algorithms. Using digital abstraction and procedural programming as tools, Jeong aesthetically reconstructs the complex movements of nature and systems in the digital realm. Working with large-scale LED screens and projection mapping as a canvas, the practice centers on the point where senses generated on screen unfold into physical space — the convergence where expanded senses meet reality.</p>
+                    <p>Jeong participated as a main artist in the Seoul Light Bitseom Festival (2023), and took part in the Paradise Art Lab Festival (2024), the opening exhibition of Atelier Nodeul (2025), and Digital November: Meta-Sensing (2025). Jeong also participated in the Cheonan Museum of Art special media exhibition printf("Human odyssey") (2022) and Audi Shanghai 〈Beyond Human〉 (2022), held the solo exhibition 〈Crystals〉 (2021) at Mumokjeok Gallery, and was selected as a Creative Talent artist by Art Center Nabi (2021).</p>
+                    <p>In the brand and public sectors, Jeong has produced media art projects with Patek Philippe, The Hyundai Seoul, Samsung SDI, Hyundai Mobis, Sulwhasoo, and Kolon, and contributed media art to the film 〈Interview〉.</p>
+                </div>
             </div>
             <div class="about-details">
                 <div class="about-block">
@@ -282,7 +349,7 @@
                     <div class="cv-year-col">2021</div>
                     <div class="cv-desc-col">
                         <div class="cv-row">
-                            <span class="cv-date"></span> /* Year only item */
+                            <span class="cv-date"></span>
                             <span class="cv-text">Crystals (Virtual Crystals) | Mumokjuk Gallery | Solo Exhibition <a
                                     href="work.html#work/crystals"
                                     class="cv-link">[Link]</a></span>
@@ -415,9 +482,10 @@
         <h2 class="section-title">Contact</h2>
         <div class="contact-content">
             <a href="mailto:jngys.works@gmail.com" class="contact-link" id="contact-email">jngys.works@gmail.com</a>
+            <a href="tel:+821055030076" class="contact-link" id="contact-phone">+82 10 5503 0076</a>
             <a href="https://jeongyunsu.com" target="_blank" class="contact-link"
                 id="contact-website">jeongyunsu.com</a>
-            <a href="https://instagram.com/j.eongyunsu" target="_blank" class="contact-link" id="contact-instagram">Instagram</a>
+            <a href="https://www.instagram.com/jeongyunsu___/" target="_blank" class="contact-link" id="contact-instagram">Instagram</a>
         </div>
     </section>
 
