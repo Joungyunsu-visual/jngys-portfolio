@@ -174,7 +174,7 @@ const WORKS = [
             ],
             [
                 "Size",
-                "15,170 × 3,800 (Visang Education)<br>4,480 × 8,960 (Shilla Stay Sejong)"
+                "15,170 × 3,800 mm (Visang Education)<br>4,480 × 8,960 mm (Shilla Stay Sejong)"
             ]
         ],
         "main": "https://res.cloudinary.com/dbgr7vngr/image/upload/v1773813577/Visang_Abstraction_5__%EA%B2%B0%EA%B3%BC_rsh8fk.webp",
