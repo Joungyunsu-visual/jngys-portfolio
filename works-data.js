@@ -129,6 +129,10 @@ const WORKS = [
             [
                 "Format",
                 "10 min, 6000 × 3000 px, variable installation"
+            ],
+            [
+                "Locations",
+                "Private collection, Los Angeles, USA (installation in progress)<br>Atelier Nodeul Opening Exhibition, Nodeul Island, Seoul (2025)"
             ]
         ],
         "main": "https://res.cloudinary.com/dbgr7vngr/image/upload/v1773050549/Storm_Feild_03_krdsbi.jpg",
@@ -161,18 +165,30 @@ const WORKS = [
         "genre": "Public Art / Media Art",
         "info": [
             [
+                "Medium",
+                "LED media wall"
+            ],
+            [
                 "Locations",
-                "Visang Education HQ, Gwacheon (installed)<br>Shilla Stay Sejong (opening 2026)"
+                "Visang Education HQ, B1 Lobby, Ground V, 54 Gwacheon-daero 2-gil, Gwacheon-si, Gyeonggi-do (installed)<br>Shilla Stay Sejong, Lobby (opening 2026)"
+            ],
+            [
+                "Size",
+                "15,170 × 3,800 (Visang Education)<br>4,480 × 8,960 (Shilla Stay Sejong)"
             ]
         ],
         "main": "https://res.cloudinary.com/dbgr7vngr/image/upload/v1773813577/Visang_Abstraction_5__%EA%B2%B0%EA%B3%BC_rsh8fk.webp",
         "descKo": [
             "〈로즐린〉 연작의 연장선에 있는 작업으로, 캔버스를 벗어난 회화의 가능성을 실험한다. 디지털 매체의 유동성으로 일상에서 스쳐 지나가는 순간의 아름다움을 포착해 공공 공간에 상설로 선보인다.",
-            "건축 공간과 어우러지며 시간에 따라 계속 달라지는 화면을 보여주는 미디어 공공미술이다."
+            "건축 공간과 어우러지며 시간에 따라 계속 달라지는 화면을 보여주는 미디어 공공미술이다.",
+            "전통적 추상회화를 미디어아트로 재구성해 자연을 은유적이고 감성적으로 그려낸다. 스스로 생성하는 알고리즘을 통해 하나의 선에서 시작해 예측할 수 없는 형태로 진화하며, 결과보다 그리는 행위인 과정 자체를 중시했다.",
+            "유기적으로 흩어지는 덩어리들이 뒤섞이며 조화를 모색하고, 자연의 색채와 이미지가 우주로 변해가는 장면은 추상회화의 공간성을 넓혀 공간과 공간이 서로 스며드는 무한한 확장을 보여준다. 미지의 세계를 디지털 기법으로 표현해, 수많은 정보와 경험을 받아들이는 이 시대의 현상을 시각화했다."
         ],
         "descEn": [
             "An extension of the Roslyn series, the work explores painting beyond the canvas. Using the fluidity of digital media, it captures passing moments of everyday beauty and presents them permanently in public space.",
-            "A media public artwork that sits within the architecture and changes continuously over time."
+            "A media public artwork that sits within the architecture and changes continuously over time.",
+            "Reinterpreting traditional abstract painting as media art, it depicts nature metaphorically and emotionally. A self-generating algorithm begins from a single line and evolves into unpredictable forms, valuing the act of drawing, the process itself, over the result.",
+            "Organic masses scatter and intermingle in search of harmony, and natural colors and images gradually turn into the cosmos, widening the spatial depth of abstract painting as spaces seep into one another and expand without end. Rendering the unknown through digital techniques, the work visualizes an age that takes in an endless flow of information and experience."
         ],
         "images": [
             "https://res.cloudinary.com/dbgr7vngr/image/upload/v1773813586/Visang_Abstraction_2__%EA%B2%B0%EA%B3%BC_kbrkho.webp",
@@ -374,7 +390,11 @@ const WORKS = [
             ],
             [
                 "Venue",
-                "'Hyper Drive' structure"
+                "'Hyper Drive' structure, Seorae Island, Banpo Hangang Park, Seocho-gu, Seoul"
+            ],
+            [
+                "Dates",
+                "2023.10.06–10.15"
             ]
         ],
         "main": "https://res.cloudinary.com/dbgr7vngr/image/upload/v1773048704/Seoul_Light_%EC%84%9C%EC%9A%B8%EB%9D%BC%EC%9D%B4%ED%8A%B8_%ED%98%84%EC%9E%A5_%EC%82%AC%EC%A7%84_2_cm6isi.jpg",
@@ -415,7 +435,30 @@ const WORKS = [
         "title": "Hyundai Mobis Lobby Media Art",
         "year": 2023,
         "category": "project",
+        "genre": "Media Art / LED Media Wall",
+        "info": [
+            [
+                "Work",
+                "Cycle"
+            ],
+            [
+                "Location",
+                "Hyundai Mobis Uiwang R&D Center, Lobby"
+            ],
+            [
+                "Medium",
+                "LED media wall"
+            ]
+        ],
         "main": "https://res.cloudinary.com/dbgr7vngr/image/upload/v1773048690/%ED%98%84%EB%8C%80%EB%AA%A8%EB%B9%84%EC%8A%A4_3_nhv9d3.jpg",
+        "descKo": [
+            "〈Cycle〉은 현대모비스 의왕연구소 로비라는 기업의 공적 공간에서 상시 상영되는 미디어아트다. 끝없이 생성되고 흩어졌다 다시 모이는 입자의 흐름으로 무한한 순환을 표현했다.",
+            "멈추지 않는 입자의 움직임은 공간을 오가는 사람들의 동선과 함께 호흡하며, 순환 속에서 끊임없이 새로운 형태가 만들어지는 과정을 보여준다."
+        ],
+        "descEn": [
+            "Cycle is a media artwork screened continuously in the lobby of the Hyundai Mobis Uiwang R&D Center, a public space within the company. A flow of particles that endlessly forms, scatters and gathers again expresses an infinite cycle.",
+            "The ceaseless movement of particles breathes along with the people passing through the space, showing new forms constantly emerging within the cycle."
+        ],
         "images": [
             "https://res.cloudinary.com/dbgr7vngr/image/upload/v1773048694/Hyundai_Mobis_pwtafd.png",
             "https://res.cloudinary.com/dbgr7vngr/image/upload/v1773144864/c3be18ac-f07a-4307-8667-10002e89212f.png"
